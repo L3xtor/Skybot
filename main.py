@@ -19,7 +19,7 @@ class floorselection(discord.ui.View):
    answer1 = None
    answer2 = None
 
-   @discord.ui.select(placeholder=("Which Dungeon-Type would 	you like to check?"),      
+   @discord.ui.select(placeholder=("Which Dungeon-Type would you like to check?"),      
         options=[
            discord.SelectOption(label="Normal Floors", value="Normal Floors"), 
            discord.SelectOption(label="Master Mode", value="Master Mode") 
