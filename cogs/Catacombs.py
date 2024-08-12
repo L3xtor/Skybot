@@ -46,7 +46,7 @@ def dungeonsInfo(playername: str, selected_profile):
 	return cataLevel, secretsfound, secretsperrun
 
 
-# Returns Miscellaneous dawta like Hypixel profiles data
+# Returns Miscellaneous data like Hypixel profiles data
 def miscellaneous_data(playername):
 	mojangData = requests.get('https://api.mojang.com/users/profiles/minecraft/' + playername).json()
 	UUID = mojangData['id']
