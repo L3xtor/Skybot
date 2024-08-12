@@ -11,6 +11,6 @@ source .venv/bin/activate
 
 ## Import all the needed Modules
 ```
-.venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerizer
+.venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerize
 
 ```
