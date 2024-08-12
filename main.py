@@ -52,7 +52,7 @@ class Bot(commands.Bot):
             		**options
             )
         
-        self.initial_extensions = settings.CATA_COGS
+        self.initial_extensions = settings.COGS
 
 
 	# Loads every cog in the cata directory
