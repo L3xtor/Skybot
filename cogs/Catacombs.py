@@ -41,7 +41,7 @@ def dungeonsInfo(playername: str, selected_profile):
 		secretsperrun = round(int(dungeons['secrets_found']) / int(catacompletions), 2)
 
 	else:
-		cataLevel, secretsfound, secretsperrun, catacompletions = 0, 0, 0, 0
+		cataLevel, secretsfound, secretsperrun = 0, 0, 0
 
 	return cataLevel, secretsfound, secretsperrun
 
@@ -86,15 +86,15 @@ class Catacombs(commands.Cog):
 		embed = discord.Embed(
 		  color = discord.Color.dark_teal(),
 		  title = f"Stat-Breakdown for {playername.title()}",
-		  description = f"""
-						Cata-Level {cata_level} \n 
-						Secrets found {secrets_found} (Per Run: {secrets_per_run}) \n 
-						Networth: {networth}  \n 
-						Has Hype: {has_hype}  
-						Has Term: {has_term}  
-						"""
 		)
 
+		embed.add_field(name='**Cata-Level**', value= cata_level, inline=False)
+		embed.add_field(name=f'Secrets found {secrets_found}', value= f'(Per Run: {secrets_per_run})', inline=False)
+		embed.add_field(name='Networth:', value= networth, inline=False)
+		embed.add_field(name='Has Hype:', value= has_hype, inline=False)
+		embed.add_field(name='Has Term:', value= has_term, inline=False)
+
+		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed) 
 
 
@@ -117,6 +117,8 @@ class Catacombs(commands.Cog):
 			title = f"Stat-Breakdown for {playername.title()}",
 			description = f"Current trophy-Level {trophyStage}"
 			)
+		
+		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)
 
 
