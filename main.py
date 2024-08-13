@@ -7,6 +7,7 @@ import discord
 from discord.app_commands.tree import CommandTree
 from discord.ext import commands
 
+
 # Modules from different files
 import utils.settings as settings
 
@@ -25,10 +26,11 @@ class floorselection(discord.ui.View):
            discord.SelectOption(label="Master Mode", value="Master Mode") 
            ]
     )
-   
+
    async def select_floortype(self, interaction: discord.Interaction, select_item: discord.ui.Select):
         self.answer1 = select_item.values 
-
+        await interaction.response.send_message(self.answer1)
+        
 
 # Main class to make a bot
 class Bot(commands.Bot):
