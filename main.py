@@ -15,6 +15,9 @@ import utils.settings as settings
 #HypixelAPI Key
 API_KEY = settings.HYPIXEL_API_SECRET
 
+# Logger
+logger = settings.logging.getLogger('bot')
+
 
 class floorselection(discord.ui.View):
    answer1 = None
@@ -63,20 +66,20 @@ class Bot(commands.Bot):
             try:
                 await self.load_extension(extension)
             except Exception as e:
-                print(f'Error loading extension {extension}: {e}')
+                logger.error(f'Error loading extension {extension}: {e}')
                 
-        await self.tree.sync()
         
 
     async def on_ready(self):
-        print("Bot is Up and ready!")
+        logger.info("Bot is Up and ready!")
         try:
             synced = await self.tree.sync()
-            print(f"Synced {len(synced)} command(s)")
+            logger.info(f"Synced {len(synced)} command(s)")
 
         except Exception as e: 
             print(e)
 
+        self.change_presence(activity=discord.Game(name='Hypixel API shitting'), status=discord.Status.dnd)
 
 
 if __name__ == "__main__":
