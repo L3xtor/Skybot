@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "disabled_existing_loggers": false,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)-10s - %(asctime)s - %(module)-15s : %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        },
+        "standard": {
+            "format": "%(levelname)-10s - %(name)-15s : %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "standard"
+        },
+        "console2": {
+            "level": "WARNING",
+            "class": "logging.StreamHandler",
+            "formatter": "standard"
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "utils/logs/logs.txt",
+            "mode": "w",
+            "formatter": "verbose"
+        }
+    },
+    "loggers": {
+        "bot": {
+          "handlers": ["console"],
+          "level": "INFO",
+          "propagate": false
+        },
+        "discord": {
+            "handlers": ["console2", "file"],
+            "level": "INFO",
+            "propagate": false
+        }
+    }
+}

@@ -1,0 +1,18 @@
+INFO       - 2024-07-22 14:23:12 - client          : logging in using static token
+INFO       - 2024-07-22 14:23:15 - gateway         : Shard ID None has connected to Gateway (Session ID: fd05d27f232780679dce3fd737b10cc0).
+ERROR      - 2024-07-22 14:24:20 - client          : Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/abc/Desktop/Coding/Python/Discord Bot/Intrest-s-Minion/.venv/lib/python3.12/site-packages/discord/client.py", line 449, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/abc/Desktop/Coding/Python/Discord Bot/Intrest-s-Minion/cogs/Level.py", line 116, in on_message
+    await self.BOT_CMD_CHANNEL.send(embed=embed)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
+ERROR      - 2024-07-22 14:24:26 - client          : Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/abc/Desktop/Coding/Python/Discord Bot/Intrest-s-Minion/.venv/lib/python3.12/site-packages/discord/client.py", line 449, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/abc/Desktop/Coding/Python/Discord Bot/Intrest-s-Minion/cogs/Level.py", line 116, in on_message
+    await self.BOT_CMD_CHANNEL.send(embed=embed)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
