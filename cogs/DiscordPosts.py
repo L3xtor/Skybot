@@ -1,10 +1,12 @@
 import requests
-import base64
+from base64 import b64encode
+from utils.settings import DISCORD_API_SECRET
 
-filepath = '/home/dcadmin/Documents/Skybot/Emoji_Images/img.jpg'
+filepath = '~/Skybot/Emoji_Images/img.jpg'
 
 binary_fc       = open(filepath, 'rb').read()  # fc aka file_content
-base64_utf8_str = base64.b64encode(binary_fc).decode('utf-8')
+base64_utf8_str = b64encode(binary_fc).decode('utf-8')
+
 
 ext     = filepath.split('.')[-1]
 dataurl = f'data:image/{ext};base64,{base64_utf8_str}'
@@ -18,7 +20,7 @@ data = {
 }
 
 
-headers = {'Authorization':'Bot TOKENHERE'}
+headers = {'Authorization':'Bot' + DISCORD_API_SECRET}
 
 
 response = requests.post(url, headers=headers, json=data)
