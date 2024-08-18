@@ -2,6 +2,9 @@ import requests
 from base64 import b64encode
 from utils.settings import DISCORD_API_SECRET
 
+print(DISCORD_API_SECRET)
+
+
 filepath = '~/Skybot/Emoji_Images/img.jpg'
 
 
