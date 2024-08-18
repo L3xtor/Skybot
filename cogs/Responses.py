@@ -12,8 +12,8 @@ class Responses(commands.Cog):
         embed = discord.Embed(
             color=discord.Colour.red(),
             title="About me",
-            description="Hi! I'm a bot that was created my TheFieryWarrior purely in python!. I am just his coding project and I hope that I can help"
-                        " with my geeky things my creator coded for you"
+            description="Hi! I'm a bot that was created by TheFieryWarrior and Lextor, purely in python!. I am just their coding project and I hope that I can help"
+                        " with my geeky things my creators coded for you"
         )
         embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/731143503530164374/7ac170c9e25e3cf308d3af80ab961234.webp?size=80')
         await ctx.send(embed=embed)
