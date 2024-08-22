@@ -10,7 +10,6 @@ load_dotenv()
 with open('utils/loggers.json') as loggers:
     logging_config = load(loggers)
 
-
 DISCORD_API_SECRET = getenv("DISCORD_API_TOKEN")
 HYPIXEL_API_SECRET = getenv("HYPIXEL_API_TOKEN")
 LOGGING_CHANNEL = getenv('LOGGING_CHANNEL')
