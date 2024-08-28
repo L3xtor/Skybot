@@ -79,7 +79,7 @@ class Bot(commands.Bot):
         except Exception as e: 
             print(e)
 
-        self.change_presence(activity=discord.Game(name='Hypixel API shitting'), status=discord.Status.dnd)
+        await self.change_presence(activity=discord.Game(name='Hypixel API shitting'), status=discord.Status.dnd)
 
 
 if __name__ == "__main__":

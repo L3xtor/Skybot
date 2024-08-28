@@ -162,3 +162,5 @@ cython_debug/
 .vscode/
 *.db
 testmain.py
+cogs/pre.py
+utils/logs

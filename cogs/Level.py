@@ -1,3 +1,5 @@
+'''
+
 import discord
 from discord.ext import commands
 
@@ -11,6 +13,7 @@ from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 from typing import Optional
+
 
 
 database = connect('database.sqlite')
@@ -102,18 +105,18 @@ class Leveling(commands.Cog):
 
         cursor.execute(f"""
                         UPDATE Level
-                        SET exp = {exp}, level = {level}
+                        SET exp = {exp}, last_level = {ceil(level)}
                         WHERE user_id = {message.author.id}
                     """)
-    
+
         if level > last_level:
             embed = discord.Embed(
                 color= discord.Color.red(),
                 timestamp= datetime.now(),
-                description=f"{message.author.mention} has leveled up to *Level {level}*. GGS"
+                description=f"{message.author.mention} has leveled up to *Level {ceil(level)}*. GGS"
             )
             embed.set_thumbnail(url=message.author.display_avatar.url)
-            await self.BOT_CMD_CHANNEL.send(embed=embed)
+            await message.channel.send(embed=embed)
 
             cursor.execute(f"""
                             UPDATE Level 
@@ -240,3 +243,4 @@ class Leveling_Debugger(commands.Cog):
 async def setup(bot):
     await bot.add_cog(Leveling(bot))
     await bot.add_cog(Leveling_Debugger(bot))
+'''
