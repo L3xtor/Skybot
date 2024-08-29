@@ -164,3 +164,4 @@ cython_debug/
 testmain.py
 cogs/pre.py
 utils/logs
+Emoji_Images/*

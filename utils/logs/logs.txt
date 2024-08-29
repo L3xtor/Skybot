@@ -1,0 +1,35 @@
+INFO       - 2024-08-29 15:53:47 - client          : logging in using static token
+INFO       - 2024-08-29 15:53:49 - gateway         : Shard ID None has connected to Gateway (Session ID: 24a4c5d6bc5b936390d7799d9745eb84).
+ERROR      - 2024-08-29 15:54:17 - bot             : Ignoring exception in command cata
+Traceback (most recent call last):
+  File "/home/dcadmin/Documents/Skybot/.venv/lib/python3.12/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dcadmin/Documents/Skybot/cogs/Catacombs.py", line 80, in cata
+    PID, selectedprofile = returnProfileID(selectedprofile=selectedprofile, playername=playername)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dcadmin/Documents/Skybot/cogs/Catacombs.py", line 69, in returnProfileID
+    for profile in hypixelProfileData['profiles']:
+                   ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'profiles'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dcadmin/Documents/Skybot/.venv/lib/python3.12/site-packages/discord/ext/commands/hybrid.py", line 444, in _invoke_with_namespace
+    value = await self._do_call(ctx, ctx.kwargs)  # type: ignore
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dcadmin/Documents/Skybot/.venv/lib/python3.12/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'cata' raised an exception: KeyError: 'profiles'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dcadmin/Documents/Skybot/.venv/lib/python3.12/site-packages/discord/ext/commands/hybrid.py", line 444, in _invoke_with_namespace
+    value = await self._do_call(ctx, ctx.kwargs)  # type: ignore
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dcadmin/Documents/Skybot/.venv/lib/python3.12/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.ext.commands.errors.HybridCommandError: Hybrid command raised an error: Command 'cata' raised an exception: KeyError: 'profiles'
+INFO       - 2024-08-29 17:54:58 - gateway         : Shard ID None has successfully RESUMED session 24a4c5d6bc5b936390d7799d9745eb84.

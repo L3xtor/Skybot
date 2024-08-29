@@ -1,10 +1,9 @@
 import requests
 from base64 import b64encode
-from utils.settings import DISCORD_API_SECRET
 
-filepath = '~/Skybot/Emoji_Images/img.jpg'
 
-def postdiscordemote(filepath,itemname):
+
+def postdiscordemote(filepath,itemname, apikey):
  applicationurl = (f'https://discord.com/api/v10/applications/1264605196466651249/emojis')
 
  binary_fc       = open(filepath, 'rb').read()  # fc aka file_content
@@ -18,7 +17,7 @@ def postdiscordemote(filepath,itemname):
     'image': dataurl
  }
 
- headers = {'Authorization':'Bot' + DISCORD_API_SECRET}
+ headers = {'Authorization':'Bot ' + apikey}
  response = requests.post(applicationurl, headers=headers, json=data)
 
  print(response.text)

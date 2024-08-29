@@ -2,9 +2,9 @@ import requests
 import json
 
 
-itemname = "WARDEN_HELMET"
 
-def getemote(itemname):
+def getjpg(itemname):
+ picpath = f'Emoji_Images/{itemname}.jpg'
 # Get Itemhash of the Skyblock item saved in variable itemname
  with open("Skyblock-Item-Emojis/v3/itemHash.json", "r") as f:
     data = json.load(f)
@@ -18,9 +18,10 @@ def getemote(itemname):
 #download and save the emoji with its itemname 
  url = (f'https://cdn.discordapp.com/emojis/{emojiid}.png')
  data = requests.get(url).content 
- f = open(f'Emoji_Images/{itemname}.jpg','wb') 
+ f = open(picpath,'wb') 
  f.write(data) 
  f.close() 
- with open(f'Emoji_Images/{itemname}.jpg', 'rb') as pic:
+ with open(picpath, 'rb') as pic:
   data = pic.read()
+
 
