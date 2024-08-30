@@ -5,12 +5,11 @@ from typing import Literal
 
 help_str = 'Contact @thefierywarrior  cause if this ain\'t working we are screwed'
 
-cogs = Literal['cogs.Level','cogs.Responses','cogs.Tests', 'cogs.Math', 'voice_cogs.voice']
+cogs = Literal['cogs.Math', 'cogs.Tests', 'cogs.Responses', 'cogs.Catacombs', 'cogs.Level', 'cogs.Emoji']
 
 
 class Tests(commands.Cog):
     def __init__(self, bot):
-        super.__init__()
         self.bot: commands.Bot = bot
 
     @commands.hybrid_group(name='tests',
