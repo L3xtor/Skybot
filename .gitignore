@@ -1,3 +1,10 @@
+# Own ignore additions
+.vscode/
+*.db
+testmain.py
+/utils/logs/
+/Emoji_Images/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -159,9 +166,3 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-.vscode/
-*.db
-testmain.py
-cogs/pre.py
-utils/logs
-Emoji_Images/*
