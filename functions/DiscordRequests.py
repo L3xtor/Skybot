@@ -1,8 +1,7 @@
 import requests
-from ..utils.settings import DISCORD_API_SECRET
 
 
-def getemote(itemname, apikey = DISCORD_API_SECRET):
+def getemote(itemname, apikey ):
     applicationurl = ('https://discord.com/api/v10/applications/1264605196466651249/emojis')
     headers = {'Authorization':'Bot ' + apikey}
     request = requests.get(applicationurl, headers=headers)
@@ -21,4 +20,3 @@ def getemote(itemname, apikey = DISCORD_API_SECRET):
        markdown= f'<:{itemname}:{emote_id}>'
        return markdown
 
-print(getemote('End_Sword'))
