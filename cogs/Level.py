@@ -1,5 +1,3 @@
-'''
-
 import discord
 from discord.ext import commands
 
@@ -37,7 +35,7 @@ def fetch_user_info(message: discord.Message):
                         VALUES({message.author.id}, 1, 0 , 1)
                     """)
 
-    return result[1], result[2], result[3]
+        return result[1], result[2], result[3]
 
 
 def create_base_card():
@@ -89,6 +87,7 @@ def create_rank_card(username, avatar_url, level, rank, exp) -> str:
     return file_path
 
 
+# Leveling system of the bot
 class Leveling(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
@@ -105,7 +104,7 @@ class Leveling(commands.Cog):
 
         cursor.execute(f"""
                         UPDATE Level
-                        SET exp = {exp}, last_level = {ceil(level)}
+                        SET exp = {exp}, level = {level}
                         WHERE user_id = {message.author.id}
                     """)
 
@@ -243,4 +242,3 @@ class Leveling_Debugger(commands.Cog):
 async def setup(bot):
     await bot.add_cog(Leveling(bot))
     await bot.add_cog(Leveling_Debugger(bot))
-'''
