@@ -1,7 +1,4 @@
-import json
-import requests
-
-
+import os
 from discord.ext import commands
 from utils.settings import DISCORD_API_SECRET
 from base64 import b64encode
@@ -89,10 +86,9 @@ class Emotes(commands.Cog):
 	async def _create(self, ctx, itemname: str):
 		self.functions.getjpg(itemname)
 		jpg = f'Emoji_Images/{itemname}.jpg'
-
-		post = self.functions.postdiscordemote(jpg, itemname)
-		markdown = self.functions.getemote(itemname)
-        
+		f_itemname = postde(jpg, itemname, k)
+		markdown = gete(f_itemname, k)
+		os.remove(jpg)
 		await ctx.send(f'The Emoji: {markdown}')
 
 
