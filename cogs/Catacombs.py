@@ -98,29 +98,5 @@ class Catacombs(commands.Cog):
 		await ctx.send(embed=embed) 
 
 
-	@commands.hybrid_command()
-	async def trophys(self, ctx, playername: str, selectedprofile: str = None):
-		"""Sends a Trophyfish-Breakdown for a given Player"""
-	  
-		# Searching Each Profile
-		PID, selectedprofile = returnProfileID(selectedprofile=selectedprofile, playername=playername)
-
-
-		SkycryptProfileAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/profile/{playername}').json()
-		trophyStage = SkycryptProfileAPI['profiles'][PID]['data']['crimson_isle']['trophy_fish']['stage']
-		fishlist = SkycryptProfileAPI['profiles'][PID]['data']['crimson_isle']['trophy_fish']['fish']
-		
-		emoji='https://cdn.discordapp.com/emojis//:Emoji:.png?v=1'
-
-		embed = discord.Embed(
-			color = discord.Color.dark_teal(),
-			title = f"Stat-Breakdown for {playername.title()}",
-			description = f"Current trophy-Level {trophyStage}"
-			)
-		
-		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
-		await ctx.send(embed=embed)
-
-
 async def setup(bot: commands.Bot):
    await bot.add_cog(Catacombs(bot))
