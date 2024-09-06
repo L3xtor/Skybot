@@ -2,7 +2,7 @@ import discord
 import requests
 from discord.ext import commands
 from cogs.Catacombs import returnProfileID
-
+from cogs.Emoji import EmoteFunctions
 
 
 
@@ -23,15 +23,12 @@ class Fishing(commands.Cog):
 			for fish in catchedlist:
 				if fish['display_name'] == fishname:
 					try: 
-						return fish['highest_tier'].capitalize()# Returns current highest Tier catched 
+						return fish['highest_tier']# Returns current highest Tier catched 
 					except:
 						return 'Undiscovered'
 
 					
-	
-			
 				
-
 		try:
 			trophyStage = SkycryptProfileAPI['profiles'][PID]['data']['crimson_isle']['trophy_fish']['stage']
 		except:
@@ -47,7 +44,8 @@ class Fishing(commands.Cog):
  
 		for fish in trophyfishnames:
 			formatedfishname = fish.title()
-			embed.add_field(name=formatedfishname, value=f"{getfishstage(fish)}", inline=True)
+			currentemotename = (f'{fish.replace(' ', '_')}_{getfishstage(fish)}').lower()
+			embed.add_field(name=formatedfishname, value=f"{EmoteFunctions().getemote(currentemotename)},{getfishstage(fish).capitalize()}", inline=True)
 		
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)
