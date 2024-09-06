@@ -82,16 +82,16 @@ class EmoteFunctions:
 class Emotes(commands.Cog):
 	@commands.hybrid_command(name='get_emoji')
 	async def _get(self, ctx, itemname: str):
-		markdown = EmoteFunctions.getemote(itemname)
+		markdown = EmoteFunctions().getemote(itemname)
 		await ctx.send(f'The Emoji: {markdown}') 
           
 
 	@commands.hybrid_command(name='create_emoji')
 	async def _create(self, ctx, itemname: str):
-		EmoteFunctions.getjpg(itemname)
+		EmoteFunctions().getjpg(itemname)
 
-		EmoteFunctions.postdiscordemote(itemname)
-		markdown = EmoteFunctions.getemote(itemname)
+		EmoteFunctions().postdiscordemote(itemname)
+		markdown = EmoteFunctions().getemote(itemname)
         
 		await ctx.send(f'The Emoji: {markdown}')
 
