@@ -4,7 +4,7 @@
 testmain.py
 /utils/logs/
 /Emoji_Images/
-cogs/pre.py
+/cogs/pre.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
