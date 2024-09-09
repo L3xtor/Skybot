@@ -84,7 +84,7 @@ class Responses(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, ctx):
-        random_number = randint(1,100)
+        random_number = randint(1,10000)
         if ctx.author.bot: return
 
         if random_number <= 2:
