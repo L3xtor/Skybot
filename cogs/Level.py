@@ -97,7 +97,11 @@ class Leveling(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.author.bot : return
-        exp, last_level =  fetch_user_info(message)
+
+        try: exp, last_level =  fetch_user_info(message)
+        except TypeError: pass
+     
+        level = 0.1 * sqrt(exp)
 
         if level > last_level:
 
@@ -116,7 +120,7 @@ class Leveling(commands.Cog):
             await message.channel.send(embed=embed)
 
         exp += randint(1,20)
-        level = 0.1 * sqrt(exp)
+
 
         cursor.execute(
                         f"""
