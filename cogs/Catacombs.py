@@ -5,8 +5,9 @@ from discord.ext import commands
 from numerize import numerize
 import requests
 
-from utils.settings import HYPIXEL_API_SECRET as API_KEY
+from utils.settings import HYPIXEL_API_SECRET as API_KEY, logging
 
+loggers = logging.getLogger('console2')
 
 # Returns profile info of player 
 def profileInfo(playername: str, PID):
@@ -52,21 +53,24 @@ def miscellaneous_data(playername):
 	UUID = mojangData['id']
 	hypixelProfileData = requests.get(f'https://api.hypixel.net/skyblock/profiles?key={API_KEY}&uuid={UUID}').json()
 
-	return hypixelProfileData
+	if hypixelProfileData['success'] != 'false':
+		return hypixelProfileData['profiles']
+	else:
+		raise Exception("INVALID HYPIXEL API KEY. PLEASE RENEW")
 
 
 # Returns profile ID based on cute name of player
 def returnProfileID(selectedprofile: str, playername: str):
-	hypixelProfileData = miscellaneous_data(playername=playername)
+	hypixelProfiles = miscellaneous_data(playername=playername)
 
 	# Searching Each Profile
 	if selectedprofile:
-		for profile in hypixelProfileData['profiles']:
+		for profile in hypixelProfiles:
 			if profile['cute_name'] == selectedprofile.capitalize():
 				return profile['profile_id'], selectedprofile # Returns PID
 
 	else:
-		for profile in hypixelProfileData['profiles']:
+		for profile in hypixelProfiles['profiles']:
 			if profile['selected'] == True:
 				return profile['profile_id'], profile['cute_name'] # Returns PID and cute name of profile
 
