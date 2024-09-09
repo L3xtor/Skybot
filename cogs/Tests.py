@@ -5,7 +5,7 @@ from typing import Literal
 
 help_str = 'Contact @thefierywarrior  cause if this ain\'t working we are screwed'
 
-cogs = Literal['cogs.Math', 'cogs.Tests', 'cogs.Responses', 'cogs.Catacombs', 'cogs.Level', 'cogs.Emoji', 'Fishing.py']
+cogs = Literal['cogs.Math', 'cogs.Tests', 'cogs.Responses', 'cogs.Catacombs', 'cogs.Level', 'cogs.Emoji', 'cogs.Fishing']
 
 
 class Tests(commands.Cog):
@@ -14,9 +14,7 @@ class Tests(commands.Cog):
 
     @commands.hybrid_group(name='tests',
                            help=help_str,
-                           hidden=True
                            )
-    @commands.is_owner()
     async def testers(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.reply(f'No subcommand used', ephemeral = True)
