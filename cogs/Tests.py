@@ -5,7 +5,7 @@ from typing import Literal
 
 help_str = 'Contact @thefierywarrior  cause if this ain\'t working we are screwed'
 
-cogs = Literal['cogs.Math', 'cogs.Tests', 'cogs.Responses', 'cogs.Catacombs', 'cogs.Level', 'cogs.Emoji']
+cogs = Literal['cogs.Math', 'cogs.Tests', 'cogs.Responses', 'cogs.Catacombs', 'cogs.Level', 'cogs.Emoji', 'Fishing.py']
 
 
 class Tests(commands.Cog):

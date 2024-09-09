@@ -71,8 +71,7 @@ class EmoteFunctions:
 
 		# Iterate through the items and print the "name"
 		item = data['items'][0]
-
-		if item['name'] == itemname:
+		if any(item['name'] == itemname for item in data['items']):
 			emote_id = item['id'] 
 			markdown= f'<:{itemname}:{emote_id}>'
 			return markdown
