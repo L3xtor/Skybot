@@ -39,7 +39,7 @@ class Fishing(commands.Cog):
 			formatedfishname = fish.title()
 			currentemotename = (f'{fish.replace(' ', '_')}_{getfishstage(fish)}').lower()
 			embed.add_field(name=formatedfishname, value=f"{EmoteFunctions().getemote(currentemotename),getfishstage(fish).capitalize()}")
-			#{EmoteFunctions().getemote(currentemotename)}, {getfishstage(fish).capitalize()}
+			
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)
 
