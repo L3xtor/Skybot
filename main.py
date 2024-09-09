@@ -77,7 +77,7 @@ class Bot(commands.Bot):
             logger.info(f"Synced {len(synced)} command(s)")
 
         except Exception as e: 
-            print(e)
+            logger.error(e)
 
         await self.change_presence(activity=discord.Game(name='Hypixel API shitting'), status=discord.Status.dnd)
 
