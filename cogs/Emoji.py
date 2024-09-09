@@ -33,8 +33,8 @@ class EmoteFunctions:
 		response = requests.post(self.applicationurl, headers=self.headers, json=data)
 
 		print(response.text)
-
 		remove(filepath)
+
 
 	@staticmethod
 	def getjpg(itemname):
@@ -70,18 +70,19 @@ class EmoteFunctions:
 
 
 		# Iterate through the items and print the "name"
-		item = data['items'][0]
-		if any(item['name'] == itemname for item in data['items']):
-			emote_id = item['id'] 
-			markdown= f'<:{itemname}:{emote_id}>'
-			return markdown
-
+		items = data['items']
+		for item in items:
+			if item['name'] == itemname:
+				emote_id = item['id'] 
+				markdown= f'<:{itemname}:{emote_id}>'
+				return markdown
+		
 
 			
 class Emotes(commands.Cog):
 	@commands.hybrid_command(name='get_emoji')
 	async def _get(self, ctx, itemname: str):
-		markdown = EmoteFunctions().getemote(itemname)
+		markdown= EmoteFunctions().getemote(itemname)
 		await ctx.send(f'The Emoji: {markdown}') 
           
 
@@ -97,3 +98,5 @@ class Emotes(commands.Cog):
 
 async def setup(bot: commands.Bot):
    await bot.add_cog(Emotes(bot))
+
+# EmoteFunctions().getemote("blobfish_silver")
