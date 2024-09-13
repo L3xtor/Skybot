@@ -1,9 +1,8 @@
 import discord
 import requests
 from discord.ext import commands
-from cogs.Catacombs import returnProfileID
-from cogs.Emoji import EmoteFunctions
-
+from hypixel.Catacombs import returnProfileID
+from hypixel.Emoji import EmoteFunctions
 
 
 class Fishing(commands.Cog):
