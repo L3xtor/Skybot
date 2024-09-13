@@ -6,6 +6,7 @@ testmain.py
 /Emoji_Images/
 /cogs/pre.py
 uploademotes.py
+database.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
