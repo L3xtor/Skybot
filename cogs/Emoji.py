@@ -58,6 +58,7 @@ class EmoteFunctions:
 
 		with open(picpath, 'rb') as pic:
 			data = pic.read()
+		return picpath
 
 	
 	def getemote(self, itemname):
@@ -70,6 +71,7 @@ class EmoteFunctions:
 
 
 		# Iterate through the items and print the "name"
+<<<<<<< HEAD
 		items = data['items']
 		for item in items:
 			if item['name'] == itemname:
@@ -77,6 +79,16 @@ class EmoteFunctions:
 				markdown= f'<:{itemname}:{emote_id}>'
 				return markdown
 		
+=======
+		item = data['items'][0]
+		if any(item['name'] == itemname for item in data['items']):
+			emote_id = item['id'] 
+			markdown= f'<:{itemname}:{emote_id}>'
+			return markdown if not None else 'Emote wasnt found'
+		
+		
+
+>>>>>>> 825fc77 (Changed the getjpg function to return the path to the picture)
 
 			
 class Emotes(commands.Cog):
