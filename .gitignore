@@ -5,6 +5,7 @@ testmain.py
 /utils/logs/
 /Emoji_Images/
 /cogs/pre.py
+uploademotes.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
