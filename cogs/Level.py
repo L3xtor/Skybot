@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from os import remove
 from requests import get
-from math import sqrt, floor
+from math import sqrt, floor, ceil
 from random import randint
 from sqlite3 import connect
 from utils.settings import LOGGING_CHANNEL
@@ -13,12 +13,11 @@ from io import BytesIO
 from typing import Optional
 
 
-
 database = connect('database.sqlite')
 database.autocommit = True
 cursor = database.cursor()
 
-cursor.execute("""CREATE TABLE IF NOT EXISTS Level(user_id INT PRIMARY KEY, exp INT, last_level INT)""")
+cursor.execute("""CREATE TABLE IF NOT EXISTS Level(user_id INT PRIMARY KEY, exp INT, level INT, last_level INT)""")
 
 
 def fetch_user_info(message: discord.Message):
@@ -32,10 +31,10 @@ def fetch_user_info(message: discord.Message):
     if result is None:
         cursor.execute(f"""
                         INSERT INTO Level
-                        VALUES({message.author.id}, 1, 1)
+                        VALUES({message.author.id}, 1, 0 , 1)
                     """)
-        return
-    return result[1], result[2]
+
+    return result[1], result[2], result[3]
 
 
 def create_base_card():
@@ -87,7 +86,6 @@ def create_rank_card(username, avatar_url, level, rank, exp) -> str:
     return file_path
 
 
-# Leveling system of the bot
 class Leveling(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
@@ -98,19 +96,19 @@ class Leveling(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot : return
 
-        try: exp, last_level =  fetch_user_info(message)
+        try: exp, level, last_level =  fetch_user_info(message)
         except TypeError: pass
-     
+
+        exp += randint(1,20)
         level = 0.1 * sqrt(exp)
 
+        cursor.execute(f"""
+                        UPDATE Level
+                        SET exp = {exp}, level = {level}
+                        WHERE user_id = {message.author.id}
+                    """)
+    
         if level > last_level:
-
-            cursor.execute(f"""
-                            UPDATE Level 
-                            SET last_level = {level}
-                            WHERE user_id = {message.author.id}
-                        """)
-            
             embed = discord.Embed(
                 color= discord.Color.red(),
                 timestamp= datetime.now(),
@@ -119,16 +117,12 @@ class Leveling(commands.Cog):
             embed.set_thumbnail(url=message.author.display_avatar.url)
             await message.channel.send(embed=embed)
 
-        exp += randint(1,20)
+            cursor.execute(f"""
+                            UPDATE Level 
+                            SET last_level = {ceil(level)}
+                            WHERE user_id = {message.author.id}
+                        """)
 
-
-        cursor.execute(
-                        f"""
-                        UPDATE Level
-                        SET exp = {exp}
-                        WHERE user_id = {message.author.id}
-                    """
-                    )
 
     @commands.hybrid_command(name='rank')
     async def rank(self, ctx, member: Optional[discord.Member]):
