@@ -15,6 +15,11 @@ sudo .venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerize P
 
 ```
 
+## Clone Altpapier's Github (only need to do this if you want to use specific emote Functions)
+```
+git clone https://github.com/Altpapier/Skyblock-Item-Emojis.git
+```
+
 ## Create all needed environment variables
 Create a file named .env in the root directory of your project and add the following keys to it
 
