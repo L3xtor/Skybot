@@ -17,23 +17,7 @@ API_KEY = settings.HYPIXEL_API_SECRET
 
 # Logger
 logger = settings.logging.getLogger('bot')
-
-
-class floorselection(discord.ui.View):
-   answer1 = None
-   answer2 = None
-
-   @discord.ui.select(placeholder=("Which Dungeon-Type would you like to check?"),      
-        options=[
-           discord.SelectOption(label="Normal Floors", value="Normal Floors"), 
-           discord.SelectOption(label="Master Mode", value="Master Mode") 
-           ]
-    )
-
-   async def select_floortype(self, interaction: discord.Interaction, select_item: discord.ui.Select):
-        self.answer1 = select_item.values 
-        await interaction.response.send_message(self.answer1)
-        
+   
 
 # Main class to make a bot
 class Bot(commands.Bot):
@@ -86,12 +70,5 @@ if __name__ == "__main__":
     intents = discord.Intents.default()
     intents.message_content = True
     bot = Bot(command_prefix='!', intents=intents)
-
-
-    @bot.hybrid_command()
-    async def times(ctx):
-        view = floorselection()
-        await ctx.send(view=view)
-        await view.wait()
 
     bot.run(settings.DISCORD_API_SECRET)
