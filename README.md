@@ -11,7 +11,7 @@ source .venv/bin/activate
 
 ## Import all the needed modules
 ```
-sudo .venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerize Pillow
+sudo .venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerize Pillow colorlog
 
 ```
 
