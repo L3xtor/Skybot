@@ -3,12 +3,46 @@
     "disabled_existing_loggers": false,
     "formatters": {
         "verbose": {
-            "format": "%(levelname)-10s - %(asctime)s - %(module)-15s : %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S"
+            "()": "colorlog.ColoredFormatter",
+            "format": "%(log_color)s%(levelname)-10s%(reset)s - %(asctime)s - %(module)-15s : %(message_log_color)s%(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "log_colors": {
+                "DEBUG": "white",
+                "INFO": "green",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "bold_red,bg_white"
+            },
+            "secondary_log_colors": {
+                "message": {
+                    "INFO": "white",
+                    "DEBUG": "white",
+                    "WARNING": "white",
+                    "ERROR": "white",
+                    "CRITICAL": "white"
+                }
+            }
         },
         "standard": {
-            "format": "%(levelname)-10s - %(name)-15s : %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S"
+            "()": "colorlog.ColoredFormatter",
+            "format": "%(log_color)s%(levelname)-10s%(reset)s - %(name)-15s : %(message_log_color)s%(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "log_colors": {
+                "DEBUG": "white",
+                "INFO": "green",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "bold_red,bg_white"
+            },
+            "secondary_log_colors": {
+                "message": {
+                    "INFO": "white",
+                    "DEBUG": "white",
+                    "WARNING": "white",
+                    "ERROR": "white",
+                    "CRITICAL": "white"
+                }
+            }
         }
     },
     "handlers": {
