@@ -1,37 +1,20 @@
 import discord
 from discord.ext import commands
 
-
-from numerize import numerize
 import requests
+from numerize import numerize
+from typing import Tuple
 
 from utils.settings import HYPIXEL_API_SECRET as API_KEY, logging
 
 loggers = logging.getLogger('console2')
 
-# Returns profile info of player 
-def profileInfo(playername: str, PID):
-	SkycryptProfileAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/profile/{playername}').json()
-	networth = numerize.numerize(SkycryptProfileAPI['profiles'][PID]['data']['networth']['networth'])
-
-	has_hype = ':x:'
-	has_term = ':x:'
-
-	for weapon in SkycryptProfileAPI['profiles'][PID]['data']['items']['weapons']['weapons']:
-		if 'Hyperion' in weapon['display_name']:  
-			has_hype = ':white_check_mark:'
-
-	for weapon in SkycryptProfileAPI['profiles'][PID]['data']['items']['weapons']['weapons']:
-		if 'Terminator' in weapon['display_name']:  
-			has_term = ':white_check_mark:'
-
-	return networth, has_hype, has_term
-
 
 # Returns dungeon info of player
-def dungeonsInfo(playername: str, selected_profile):
-	SkycryptDungeonsAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/dungeons/{playername}/{selected_profile}').json()
+def dungeonsInfo(playername: str, selected_profile: str = None) -> Tuple[int, int, int, dict]:
 
+	_, selected_profile = returnProfileID(playername=playername)
+	SkycryptDungeonsAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/dungeons/{playername}/{selected_profile}').json()
 
 	dungeons = SkycryptDungeonsAPI['dungeons']
 
@@ -44,24 +27,12 @@ def dungeonsInfo(playername: str, selected_profile):
 	else:
 		cataLevel, secretsfound, secretsperrun = 0, 0, 0
 
-	return cataLevel, secretsfound, secretsperrun
-
-
-# Returns Miscellaneous data like Hypixel profiles data
-def miscellaneous_data(playername):
-	mojangData = requests.get('https://api.mojang.com/users/profiles/minecraft/' + playername).json()
-	UUID = mojangData['id']
-	hypixelProfileData = requests.get(f'https://api.hypixel.net/skyblock/profiles?key={API_KEY}&uuid={UUID}').json()
-
-	if hypixelProfileData['success'] != 'false':
-		return hypixelProfileData['profiles']
-	else:
-		raise Exception("INVALID HYPIXEL API KEY. PLEASE RENEW")
+	return cataLevel, secretsfound, secretsperrun, dungeons
 
 
 # Returns profile ID based on cute name of player
-def returnProfileID(selectedprofile: str, playername: str):
-	hypixelProfiles = miscellaneous_data(playername=playername)
+def returnProfileID(playername: str, selectedprofile: str = None):
+	hypixelProfiles = Catacombs().miscellaneous_data(playername=playername)
 
 	# Searching Each Profile
 	if selectedprofile:
@@ -75,7 +46,62 @@ def returnProfileID(selectedprofile: str, playername: str):
 				return profile['profile_id'], profile['cute_name'] # Returns PID and cute name of profile
 
 
+
+class floorselection(discord.ui.View):
+	def __init__(self, *, timeout: float | None = 180, playername: str):
+		super().__init__(timeout=timeout)
+
+		self.playername = playername
+
+	@discord.ui.select(placeholder=("Which Dungeon-Type would you like to check?"),      
+		options=[
+			discord.SelectOption(label="Normal Floors", value="catacombs", default=True), 
+			discord.SelectOption(label="Master Mode", value="master_catacombs") 
+			]
+	)
+	async def select_floortype(self, interaction: discord.Interaction, select_item: discord.ui.Select):
+		_, _, _, dungeons = dungeonsInfo(self.playername)
+
+		# Adds best run of each floor from entrance to floor 7
+		best_run_for_each_floor = [dungeons[select_item.values]['floors'][i]['best_runs']['0']['elapsed_time'] for i in range(8)]
+
+		await interaction.message.reply(best_run_for_each_floor)
+
+
+
+
 class Catacombs(commands.Cog):
+
+	# Returns profile info of player 
+	@staticmethod
+	def profileInfo(playername: str, PID):
+		SkycryptProfileAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/profile/{playername}').json()
+		networth = numerize.numerize(SkycryptProfileAPI['profiles'][PID]['data']['networth']['networth'])
+
+		has_hype = ':x:'
+		has_term = ':x:'
+
+		for weapon in SkycryptProfileAPI['profiles'][PID]['data']['items']['weapons']['weapons']:
+			if 'Hyperion' in weapon['display_name']:  
+				has_hype = ':white_check_mark:'
+
+		for weapon in SkycryptProfileAPI['profiles'][PID]['data']['items']['weapons']['weapons']:
+			if 'Terminator' in weapon['display_name']:  
+				has_term = ':white_check_mark:'
+
+		return networth, has_hype, has_term
+	
+
+	# Returns Miscellaneous data like Hypixel profiles data
+	@staticmethod
+	def miscellaneous_data(playername):
+		mojangData = requests.get('https://api.mojang.com/users/profiles/minecraft/' + playername).json()
+		UUID = mojangData['id']
+		hypixelProfileData = requests.get(f'https://api.hypixel.net/skyblock/profiles?key={API_KEY}&uuid={UUID}').json()
+
+		if hypixelProfileData['success'] != 'false': return hypixelProfileData['profiles']
+		else: raise Exception("INVALID HYPIXEL API KEY. PLEASE RENEW")
+				
 
 	@commands.hybrid_command()
 	async def cata(self, ctx, playername: str, selectedprofile: str = None):
@@ -83,8 +109,8 @@ class Catacombs(commands.Cog):
 	  
 		PID, selectedprofile = returnProfileID(selectedprofile=selectedprofile, playername=playername)
 
-		networth, has_hype, has_term = profileInfo(playername=playername, PID=PID)
-		cata_level, secrets_found, secrets_per_run = dungeonsInfo(playername=playername, selected_profile=selectedprofile)
+		networth, has_hype, has_term = self.profileInfo(playername=playername, PID=PID)
+		cata_level, secrets_found, secrets_per_run, _ = dungeonsInfo(playername=playername, selected_profile=selectedprofile)
 
 
 		embed = discord.Embed(
@@ -100,6 +126,15 @@ class Catacombs(commands.Cog):
 
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed) 
+
+
+	@commands.hybrid_command()
+	async def times(self, ctx, playername: str):
+		view = floorselection(playername=playername)
+		await ctx.send(view=view)
+		await view.wait()
+
+
 
 
 async def setup(bot: commands.Bot):
