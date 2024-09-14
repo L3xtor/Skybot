@@ -36,16 +36,8 @@ class Fishing(commands.Cog):
  
 		for fish in trophyfishnames:
 			formatedfishname = fish.title()
-<<<<<<< HEAD
 			currentemotename = (f'{fish.replace(' ', '_')}_{getfishstage(fish)}').lower()
 			embed.add_field(name=formatedfishname, value=f"{EmoteFunctions().getemote(currentemotename),getfishstage(fish).capitalize()}")
-=======
-			fishname = (f'{fish.replace(' ', '_').replace('-', '_')}_{getfishstage(fish)}')
-			loweredfishname = fishname.lower()
-			emote = EmoteFunctions().getemote(loweredfishname)
-			fishstage = getfishstage(fish).capitalize()
-			embed.add_field(name=f'1', value=f"1")
->>>>>>> c3dbfaa (Reorganized the Trophyfishing Embed loop)
 			
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)

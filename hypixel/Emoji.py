@@ -71,15 +71,6 @@ class EmoteFunctions:
 
 
 		# Iterate through the items and print the "name"
-<<<<<<< HEAD
-		items = data['items']
-		for item in items:
-			if item['name'] == itemname:
-				emote_id = item['id'] 
-				markdown= f'<:{itemname}:{emote_id}>'
-				return markdown
-		
-=======
 		item = data['items'][0]
 		if any(item['name'] == itemname for item in data['items']):
 			emote_id = item['id'] 
@@ -88,7 +79,6 @@ class EmoteFunctions:
 		
 		
 
->>>>>>> 825fc77 (Changed the getjpg function to return the path to the picture)
 
 			
 class Emotes(commands.Cog):
