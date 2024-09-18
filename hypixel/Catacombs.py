@@ -4,6 +4,7 @@ from discord.ext import commands
 import requests
 from numerize import numerize
 from typing import Tuple
+from datetime import datetime, timedelta
 
 from utils.settings import HYPIXEL_API_SECRET as API_KEY, logging
 
@@ -41,8 +42,8 @@ def returnProfileID(playername: str, selectedprofile: str = None):
 				return profile['profile_id'], selectedprofile # Returns PID
 
 	else:
-		for profile in hypixelProfiles['profiles']:
-			if profile['selected'] == True:
+		for profile in hypixelProfiles:
+			if profile['selected']:
 				return profile['profile_id'], profile['cute_name'] # Returns PID and cute name of profile
 
 
@@ -53,9 +54,9 @@ class floorselection(discord.ui.View):
 
 		self.playername = playername
 
-	@discord.ui.select(placeholder=("Which Dungeon-Type would you like to check?"),      
+	@discord.ui.select(placeholder="Which Dungeon-Type would you like to check?",      
 		options=[
-			discord.SelectOption(label="Normal Floors", value="catacombs", default=True), 
+			discord.SelectOption(label="Normal Floors", value="catacombs"), 
 			discord.SelectOption(label="Master Mode", value="master_catacombs") 
 			]
 	)
@@ -63,11 +64,24 @@ class floorselection(discord.ui.View):
 		_, _, _, dungeons = dungeonsInfo(self.playername)
 
 		# Adds best run of each floor from entrance to floor 7
-		best_run_for_each_floor = [dungeons[select_item.values]['floors'][i]['best_runs']['0']['elapsed_time'] for i in range(8)]
+		best_run_for_each_floor = [dungeons[select_item.values[0]]['floors'][str(i)]['best_runs'][0]['elapsed_time'] for i in range(8)]
 
-		await interaction.message.reply(best_run_for_each_floor)
+		embed = discord.Embed(
+			color= discord.Color.red(),
+			title=f"Best time for each floor for {self.playername}",
+			timestamp=datetime.now()
+		)
+		embed.add_field(name='Best time for Entrance',value=timedelta(seconds=best_run_for_each_floor[0]), inline=False)
+		embed.add_field(name='Best time for Floor 1',value=timedelta(seconds=best_run_for_each_floor[1]), inline=False)
+		embed.add_field(name='Best time for Floor 2',value=timedelta(seconds=best_run_for_each_floor[2]), inline=False)
+		embed.add_field(name='Best time for Floor 3',value=timedelta(seconds=best_run_for_each_floor[3]), inline=False)
+		embed.add_field(name='Best time for Floor 4',value=timedelta(seconds=best_run_for_each_floor[4]), inline=False)
+		embed.add_field(name='Best time for Floor 5',value=timedelta(seconds=best_run_for_each_floor[5]), inline=False)
+		embed.add_field(name='Best time for Floor 6',value=timedelta(seconds=best_run_for_each_floor[5]), inline=False)
+		embed.add_field(name='Best time for Floor 7',value=timedelta(seconds=best_run_for_each_floor[6]), inline=False)
 
-
+		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{self.playername}/100.png')
+		await interaction.channel.send(embed=embed)
 
 
 class Catacombs(commands.Cog):
@@ -99,7 +113,7 @@ class Catacombs(commands.Cog):
 		UUID = mojangData['id']
 		hypixelProfileData = requests.get(f'https://api.hypixel.net/skyblock/profiles?key={API_KEY}&uuid={UUID}').json()
 
-		if hypixelProfileData['success'] != 'false': return hypixelProfileData['profiles']
+		if hypixelProfileData['success']: return hypixelProfileData['profiles']
 		else: raise Exception("INVALID HYPIXEL API KEY. PLEASE RENEW")
 				
 
