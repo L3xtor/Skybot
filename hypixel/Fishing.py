@@ -33,11 +33,21 @@ class Fishing(commands.Cog):
 			)
 		  
 		trophyfishnames = ['Blobfish', 'Flyfish', 'Golden Fish', 'Gusher', 'Karate Fish', 'Lavahorse', 'Mana Ray', 'Moldfin', 'Skeleton Fish', 'Slugfish', 'Soul Fish', 'Steaming-Hot Flounder', 'Sulphur Skitter', 'Vanille', 'Volcanic Stonefish', 'Obfuscated 1','Obfuscated 2', 'Obfuscated 3']
- 
+
+
+
+
 		for fish in trophyfishnames:
-			formatedfishname = fish.title()
-			currentemotename = (f'{fish.replace(' ', '_')}_{getfishstage(fish)}').lower()
-			embed.add_field(name=formatedfishname, value=f"{EmoteFunctions().getemote(currentemotename),getfishstage(fish).capitalize()}")
+			fishname = (f'{fish.replace(' ', '_').replace('-', '_')}_{getfishstage(fish)}')
+			loweredfishname = fishname.lower()
+			ec = (EmoteFunctions().getemote(loweredfishname)) 
+			fishstage = getfishstage(fish).capitalize()
+			print (ec)
+	
+			if ec == None:
+				print(f'not found {loweredfishname}') 
+
+			embed.add_field(name=fishname, value=f"{ec}, {fishstage}")
 			
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)
