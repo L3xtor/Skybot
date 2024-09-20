@@ -1,53 +1,44 @@
 import discord
 import requests
 from discord.ext import commands
-from hypixel.Catacombs import returnProfileID
+from hypixel.catacombs.functions import returnProfileID
 from hypixel.Emoji import EmoteFunctions
 
+from typing import Tuple
 
 class Fishing(commands.Cog):
+	def get_fish_and_trophy_stage(self, playername: str, selected_profile: str = None) -> Tuple[dict, str]:
 
-	@commands.hybrid_command()
-	async def trophy(self, ctx, playername: str, selectedprofile: str = None):
-		"""Sends a Trophyfish-Breakdown for a given Player"""
-	  	
 		# Searching Each Profile
-		PID, selectedprofile = returnProfileID(selectedprofile=selectedprofile, playername=playername)
+		PID, _ = returnProfileID(selectedprofile=selected_profile, playername=playername)
 		SkycryptProfileAPI: dict = requests.get(f'https://sky.shiiyu.moe/api/v2/profile/{playername}').json()
 		fish_data: dict= SkycryptProfileAPI['profiles'][PID]['data']['crimson_isle']['trophy_fish']
-
-		def getfishstage(fishname):
-			catchedlist: dict = fish_data.get('fish')
-			for fish in catchedlist:
-				if fish['display_name'] == fishname :
-					return (fish.get('highest_tier')) if not None else 'Undiscovered'
-
+		catchedlist: dict = fish_data.get('fish')
 
 		trophyStage = fish_data.get('stage') if not None else 'No Stage reached'
 
+		# Creates a dictionary with all the fish name where " " gets replaced by '_' in fish names 
+		# and the highest tier of the fish is the value
+		fish_tier = {fish['display_name']: fish.get('highest_tier') for fish in catchedlist}
 
+		return fish_tier.items(), trophyStage
+
+	@commands.hybrid_command(name='trophy_stats')
+	async def trophy(self, ctx, playername: str, selectedprofile: str = None):
+		"""Sends a Trophyfish-Breakdown for a given Player"""
+	  	
+		fish_tiers ,trophyStage = self.get_fish_and_trophy_stage(playername, selectedprofile)
 		embed = discord.Embed(
 			color = discord.Color.dark_teal(),
 			title = f"Trophyfish-Breakdown for {playername.title()}",
 			description = f"Current Trophy-Level: {trophyStage}",
 			)
-		  
-		trophyfishnames = ['Blobfish', 'Flyfish', 'Golden Fish', 'Gusher', 'Karate Fish', 'Lavahorse', 'Mana Ray', 'Moldfin', 'Skeleton Fish', 'Slugfish', 'Soul Fish', 'Steaming-Hot Flounder', 'Sulphur Skitter', 'Vanille', 'Volcanic Stonefish', 'Obfuscated 1','Obfuscated 2', 'Obfuscated 3']
 
+		for fish_name, fish_stage in fish_tiers:
+			fishname: str = ((fish_name.replace(" ", "_")).replace("-","_") + "_" + fish_stage).lower()
+			emotji_markdown = (EmoteFunctions().getemote(fishname))
 
-
-
-		for fish in trophyfishnames:
-			fishname = (f'{fish.replace(' ', '_').replace('-', '_')}_{getfishstage(fish)}')
-			loweredfishname = fishname.lower()
-			ec = (EmoteFunctions().getemote(loweredfishname)) 
-			fishstage = getfishstage(fish).capitalize()
-			print (ec)
-	
-			if ec == None:
-				print(f'not found {loweredfishname}') 
-
-			embed.add_field(name=fishname, value=f"{ec}, {fishstage}")
+			embed.add_field(name=fishname.replace("_", " ").title(), value=f"{emotji_markdown}, {fish_stage.capitalize()}")
 			
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)

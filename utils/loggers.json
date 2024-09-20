@@ -66,12 +66,12 @@
     },
     "loggers": {
         "bot": {
-          "handlers": ["console"],
+          "handlers": ["file"],
           "level": "INFO",
           "propagate": false
         },
         "discord": {
-            "handlers": ["console2", "file"],
+            "handlers": ["file"],
             "level": "INFO",
             "propagate": false
         }

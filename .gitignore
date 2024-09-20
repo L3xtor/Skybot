@@ -2,7 +2,7 @@
 .vscode/
 *.db
 testmain.py
-/utils/logs/*
+/utils/logs/
 /Emoji_Images/
 /cogs/pre.py
 uploademotes.py

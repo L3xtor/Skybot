@@ -1,7 +1,6 @@
 import json
 import requests
 
-
 from discord.ext import commands
 from utils.settings import DISCORD_API_SECRET
 from base64 import b64encode
@@ -62,23 +61,10 @@ class EmoteFunctions:
 
 	
 	def getemote(self, itemname):
-		request = requests.get(self.applicationurl, headers=self.headers)
-		if request.ok: 
-			data = request.json()
-		
-		else:
-			raise ValueError('Request is not ok, verify key', request.content)
-
-
-		# Iterate through the items and print the "name"
-		item = data['items'][0]
-		if any(item['name'] == itemname for item in data['items']):
-			emote_id = item['id'] 
-			markdown= f'<:{itemname}:{emote_id}>'
-			return markdown if not None else 'Emote wasnt found'
-		
-		
-
+		with open("hypixel/emojis.json") as f:
+			items = json.load(f)
+			markdown = f'<:{itemname}:{items[itemname]}>'
+			return markdown
 
 			
 class Emotes(commands.Cog):
@@ -100,5 +86,3 @@ class Emotes(commands.Cog):
 
 async def setup(bot: commands.Bot):
    await bot.add_cog(Emotes(bot))
-
-# EmoteFunctions().getemote("blobfish_silver")
