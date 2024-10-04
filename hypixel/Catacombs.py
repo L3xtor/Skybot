@@ -5,8 +5,8 @@ import requests
 import logging
 from numerize import numerize
 
-from hypixel.catacombs.Floorselection import floorselection
-from hypixel.catacombs.functions import *
+from hypixel.utils.Floorselection import floorselection
+from hypixel.utils.functions import *
 
 loggers = logging.getLogger('console2')
 

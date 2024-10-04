@@ -1,8 +1,8 @@
 import discord
 import requests
 from discord.ext import commands
-from hypixel.catacombs.functions import returnProfileID
-from hypixel.Emoji import EmoteFunctions
+from hypixel.utils.functions import returnProfileID
+from hypixel.utils.Emoji import EmoteFunctions
 
 from typing import Tuple
 
