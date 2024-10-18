@@ -47,7 +47,7 @@ def returnProfileID(playername: str, selectedprofile: str = None):
 def miscellaneous_data(playername):
 	mojangData = requests.get('https://api.mojang.com/users/profiles/minecraft/' + playername).json()
 	UUID = mojangData['id']
-	hypixelProfileData = requests.get(f'https://api.hypixel.net/skyblock/profiles?key={API_KEY}&uuid={UUID}').json()
+	hypixelProfileData = requests.get(f'https://api.hypixel.net/v2/skyblock/profiles?key={API_KEY}&uuid={UUID}').json()
 
 	if hypixelProfileData['success']: return hypixelProfileData['profiles']
 	else: raise HypixelAPIError("INVALID HYPIXEL API KEY. PLEASE RENEW")
