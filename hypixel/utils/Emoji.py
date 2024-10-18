@@ -61,7 +61,7 @@ class EmoteFunctions:
 
 	
 	def getemote(self, itemname):
-		with open("hypixel/emojis.json") as f:
+		with open("hypixel/utils/emojis.json") as f:
 			items = json.load(f)
 			markdown = f'<:{itemname}:{items[itemname]}>'
 			return markdown
