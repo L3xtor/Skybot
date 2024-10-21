@@ -26,3 +26,9 @@ Create a file named .env in the root directory of your project and add the follo
 - HYPIXEL_API_TOKEN="" -> you can get this from https://developer.hypixel.net/
 - DISCORD_API_TOKEN="" -> you can get this from https://discord.com/developers
 - LOGGING_CHANNEL = "" -> rightclick on the channel you want the bot to send their logs to and "Copy Channel-ID"
+
+# Todo 
+For upcoming Features check our [Todo's](https://github.com/L3xtor/Skybot/blob/main/README.md)
+
+# Features 
+For implemented Features check our [Features](https://github.com/L3xtor/Skybot/blob/main/FEATURESmd)
