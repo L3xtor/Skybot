@@ -28,7 +28,7 @@ Create a file named .env in the root directory of your project and add the follo
 - LOGGING_CHANNEL = "" -> rightclick on the channel you want the bot to send their logs to and "Copy Channel-ID"
 
 # Todo 
-For upcoming Features check our [Todo's](https://github.com/L3xtor/Skybot/blob/main/README.md)
+For upcoming Features check our [Todo's](https://github.com/L3xtor/Skybot/blob/main/TODO.md)
 
 # Features 
-For implemented Features check our [Features](https://github.com/L3xtor/Skybot/blob/main/FEATURESmd)
+For implemented Features check our [Features](https://github.com/L3xtor/Skybot/blob/main/FEATURES.md)
