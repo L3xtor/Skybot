@@ -4,8 +4,6 @@
 testmain.py
 /utils/logs/
 /Emoji_Images/
-/cogs/pre.py
-uploademotes.py
 database.sqlite
 
 # Byte-compiled / optimized / DLL files
@@ -13,8 +11,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python

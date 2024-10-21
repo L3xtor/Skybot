@@ -31,13 +31,9 @@ class floorselection(discord.ui.View):
 			timestamp=datetime.now()
 		)
 		embed.add_field(name='Best time for Entrance',value=timedelta(milliseconds=best_run_for_each_floor[0]), inline=False)
-		embed.add_field(name='Best time for Floor 1',value=timedelta(milliseconds=best_run_for_each_floor[1]), inline=False)
-		embed.add_field(name='Best time for Floor 2',value=timedelta(milliseconds=best_run_for_each_floor[2]), inline=False)
-		embed.add_field(name='Best time for Floor 3',value=timedelta(milliseconds=best_run_for_each_floor[3]), inline=False)
-		embed.add_field(name='Best time for Floor 4',value=timedelta(milliseconds=best_run_for_each_floor[4]), inline=False)
-		embed.add_field(name='Best time for Floor 5',value=timedelta(milliseconds=best_run_for_each_floor[5]), inline=False)
-		embed.add_field(name='Best time for Floor 6',value=timedelta(milliseconds=best_run_for_each_floor[5]), inline=False)
-		embed.add_field(name='Best time for Floor 7',value=timedelta(milliseconds=best_run_for_each_floor[6]), inline=False)
+
+		for i in range(1,8): embed.add_field(name=f'Best time for Floor {i}',value=timedelta(milliseconds=best_run_for_each_floor[i]), inline=False)
+
 
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{self.playername}/100.png')
 		await interaction.channel.send(embed=embed)

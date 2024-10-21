@@ -3,12 +3,45 @@ from discord.ext import commands
 
 import requests
 import logging
-from numerize import numerize
+from numerize.numerize import numerize
+from ctypes import c_int, c_double, Structure, CDLL
 
 from hypixel.utils.Floorselection import floorselection
 from hypixel.utils.functions import *
 
 loggers = logging.getLogger('console2')
+
+# Load the shared library (adjust the path if needed)
+# Use 'libcata.dll' for Windows or './libcata.so' for Linux/macOS
+lib = CDLL('hypixel/catacombs/skills.so')
+
+# Define the SkillsInfo structure in Python to match the C++ struct
+class SkillInfo(Structure):
+	"""
+		Structure to define te Skill level, current xp, xp required to reach the next level, to access these here is an example:-
+		```
+			playerInfo = lib.getPLayerSkillInfo(initial_xp : float)
+		```
+
+		To access Skill level, remaining xp and xp to reach next level, we can do this
+		```
+			skillLevel : int = playerInfo.skill_level
+			current_xp : float = playerInfo.remaining_xp
+			xp_to_reach_next_level : float = playerInfo.xp_required_to_level_up
+		``` 
+		
+	"""
+	_fields_ = [
+        ("skill_level", c_int),
+        ("remaining_xp", c_double),
+        ("xp_required_to_level_up", c_double)
+    ]
+
+# Specify the return type for the getPlayerSkillInfo function (SkillInfo structure)
+lib.getPlayerSkillInfo.restype = SkillInfo
+
+# Specify the argument type for the getPlayerSkillInfo function (takes a double)
+lib.getPlayerSkillInfo.argtypes = [c_double]
 
 
 class Catacombs(commands.Cog):
@@ -17,7 +50,7 @@ class Catacombs(commands.Cog):
 	@staticmethod
 	def profileInfo(playername: str, PID):
 		SkycryptProfileAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/profile/{playername}').json()
-		networth = numerize.numerize(SkycryptProfileAPI['profiles'][PID]['data']['networth']['networth'])
+		networth = numerize(SkycryptProfileAPI['profiles'][PID]['data']['networth']['networth'])
 
 		has_hype = ':x:'
 		has_term = ':x:'

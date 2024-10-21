@@ -28,7 +28,12 @@ Create a file named .env in the root directory of your project and add the follo
 - LOGGING_CHANNEL = "" -> rightclick on the channel you want the bot to send their logs to and "Copy Channel-ID"
 
 # Todo 
-For upcoming Features check our [Todo's](https://github.com/L3xtor/Skybot/blob/main/TODO.md)
+For upcoming Features check our [Todo's](https://github.com/L3xtor/Skybot/blob/main/git/TODO.md)
 
 # Features 
-For implemented Features check our [Features](https://github.com/L3xtor/Skybot/blob/main/FEATURES.md)
+For implemented Features check our [Features](https://github.com/L3xtor/Skybot/blob/main/git/FEATURES.md)
+
+# To compile the cpp file
+```
+g++ -shared -fPIC -o hypixel/catacombs/skills.so hypixel/catacombs/cata_Info.cpp
+```
