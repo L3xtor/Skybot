@@ -35,15 +35,23 @@ class Fishing(commands.Cog):
 			)
 
 		for fish_name, fish_stage in fish_tiers:
-			fish_and_stage: str = ((fish_name.replace(" ", "_")).replace("-","_") + "_" + fish_stage).lower()
+			try:
+				fish_and_stage: str = ((fish_name.replace(" ", "_")).replace("-","_") + "_" + fish_stage).lower()
+			except TypeError:
+				fish_and_stage: str = ((fish_name.replace(" ", "_")).replace("-","_") + "_bronze").lower()
+				
 			emoji_markdown = (EmoteFunctions().getemote(fish_and_stage))
         
 			if fish_stage == 'bronze':
 				fish_stage_emote = ':brown_circle: Bronze'
+			elif fish_stage == 'silver': 
+				fish_stage_emote = ':white_circle: Silver'
 			elif fish_stage == 'gold': 
 				fish_stage_emote = ':yellow_circle: Gold'
 			elif fish_stage == 'diamond':
 				fish_stage_emote = ':small_blue_diamond: Diamond'
+			elif fish_stage is None:
+				fish_stage_emote = 'Not found yet!'
 
 			embed.add_field(name=f'{emoji_markdown} {fish_name.title()}', value=f'{fish_stage_emote}')
 			
