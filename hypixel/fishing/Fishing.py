@@ -35,10 +35,17 @@ class Fishing(commands.Cog):
 			)
 
 		for fish_name, fish_stage in fish_tiers:
-			fishname: str = ((fish_name.replace(" ", "_")).replace("-","_") + "_" + fish_stage).lower()
-			emotji_markdown = (EmoteFunctions().getemote(fishname))
+			fish_and_stage: str = ((fish_name.replace(" ", "_")).replace("-","_") + "_" + fish_stage).lower()
+			emoji_markdown = (EmoteFunctions().getemote(fish_and_stage))
+        
+			if fish_stage == 'bronze':
+				fish_stage_emote = ':brown_circle: Bronze'
+			elif fish_stage == 'gold': 
+				fish_stage_emote = ':yellow_circle: Gold'
+			elif fish_stage == 'diamond':
+				fish_stage_emote = ':small_blue_diamond: Diamond'
 
-			embed.add_field(name=fishname.replace("_", " ").title(), value=f"{emotji_markdown}, {fish_stage.capitalize()}")
+			embed.add_field(name=f'{emoji_markdown} {fish_name.title()}', value=f'{fish_stage_emote}')
 			
 		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{playername}/100.png')
 		await ctx.send(embed=embed)
