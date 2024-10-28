@@ -4,6 +4,7 @@ import requests
 from utils.settings import HYPIXEL_API_SECRET
 from hypixel.utils.functions import minecraft_uuid
 from datetime import datetime
+import aiohttp
 
 
 class Skillselection(discord.ui.View):
@@ -11,6 +12,8 @@ class Skillselection(discord.ui.View):
 		super().__init__(timeout=timeout)
 
 		self.playername = playername
+		self.skill_data = 'Not filled yet'
+		self.interaction_complete = False
 
 	@discord.ui.select(placeholder="Which Skill would you like to check?",      
 		options=[
@@ -29,7 +32,10 @@ class Skillselection(discord.ui.View):
 	async def select_skill(self, interaction: discord.Interaction, select_item: discord.ui.Select):
 		UUID = minecraft_uuid(playername=self.playername)
 		skill_name = select_item.values[0]
-		hypixel_data = requests.get(f'https://api.hypixel.net/v2/skyblock/profiles?key={HYPIXEL_API_SECRET}&uuid={UUID}').json()
+
+		async with aiohttp.ClientSession() as session:
+			async with session.get(f'https://api.hypixel.net/v2/skyblock/profiles?key={HYPIXEL_API_SECRET}&uuid={UUID}') as resp:
+				hypixel_data = await resp.json()  
 
 		for profiles in hypixel_data['profiles']:
 			if profiles['selected']:
@@ -37,16 +43,10 @@ class Skillselection(discord.ui.View):
 				break
 
 		if skill_name == "catacombs":
-			skill_data = profile_data['members'][UUID]['dungeons']['dungeon_types']['catacombs']['experience']
+			self.skill_data = profile_data['members'][UUID]['dungeons']['dungeon_types']['catacombs']['experience']
 		else:
-			skill_data = profile_data['members'][UUID]['player_data']['experience'][skill_name]
-		
-		embed = discord.Embed(
-			color= discord.Color.red(),
-			title=f"Test",
-			timestamp=datetime.now()
-		)
-		embed.add_field(name='Testname',value=(skill_data), inline=False)
+			self.skill_data = profile_data['members'][UUID]['player_data']['experience'][skill_name]
 
-		embed.set_thumbnail(url=f'https://mineskin.eu/headhelm/{self.playername}/100.png')
-		await interaction.channel.send(embed=embed)
+		self.interaction_complete = True
+		await interaction.response.defer()
+
