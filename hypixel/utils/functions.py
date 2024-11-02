@@ -52,6 +52,13 @@ def miscellaneous_data(playername):
 	if hypixelProfileData['success']: return hypixelProfileData['profiles']
 	else: raise HypixelAPIError(hypixelProfileData['cause'])
      
+def player_data(playername):
+	UUID = minecraft_uuid(playername=playername)
+	hypixelProfileData = requests.get(f'https://api.hypixel.net/v2/player?key={API_KEY}&uuid={UUID}').json()
+
+	if hypixelProfileData['success']: return hypixelProfileData['player']
+	else: raise HypixelAPIError(hypixelProfileData['cause'])
+      
 
 def minecraft_uuid(playername: str): 
       return (requests.get('https://api.mojang.com/users/profiles/minecraft/' + playername).json())['id']
