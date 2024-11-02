@@ -1,6 +1,7 @@
 import requests
 from typing import Tuple
 from numerize import numerize
+from sqlite3 import connect
 
 from utils.settings import HYPIXEL_API_SECRET as API_KEY
 
@@ -54,3 +55,21 @@ def miscellaneous_data(playername):
 
 def minecraft_uuid(playername: str): 
       return (requests.get('https://api.mojang.com/users/profiles/minecraft/' + playername).json())['id']
+
+
+def connect_linkdb():
+        database = connect('accounts.sqlite')
+        database.isolation_level = None  # Enables autocommit mode
+        cursor = database.cursor()
+
+        # Create the table if it doesn't exist
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS accountlinks (
+        discord_uuid VARCHAR(255) PRIMARY KEY,
+        minecraft_uuid VARCHAR(255),
+        discord_name VARCHAR(255),
+        minecraft_name VARCHAR(255),
+        is_linked BOOLEAN
+        )
+        """)
+        return cursor
