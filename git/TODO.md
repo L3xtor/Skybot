@@ -1,7 +1,6 @@
 # Planned / WIP 
 
-- [ ] Implement verification System
-    - [ ] Save mc UUID and discord UUID in DB
+
 
 - [ ] Improve the /cata cmd with more Info
     - [ ] Add SA __>[WIP by CodingWithFiery]__
@@ -18,3 +17,6 @@
 ## Done 
 
 - [x] Make fishing look better by adding emotes
+      
+- [x] Implement verification System
+    - [x] Save mc UUID and discord UUID in DB
