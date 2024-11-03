@@ -80,3 +80,25 @@ def connect_linkdb():
         )
         """)
         return cursor
+
+
+def whodis(dcname):
+        cursor = connect_linkdb()
+        result = cursor.execute(f"SELECT discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked FROM accountlinks WHERE discord_name = '{dcname}'").fetchone()
+
+        if result:
+            discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked = result
+
+        class player:
+            def __init__(self, discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked):
+                self.discordid = discord_uuid
+                self.minecraftid = minecraft_uuid
+                self.discordname = discord_name
+                self.minecraftname = minecraft_name
+                self.linked = is_linked
+
+        return player(discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked)
+    
+
+
+        
