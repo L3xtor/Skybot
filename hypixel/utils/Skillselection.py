@@ -15,7 +15,7 @@ class Skillselection(discord.ui.View):
 
 	@discord.ui.select(placeholder="Which Skill would you like to check?",      
 		options=[
-			discord.SelectOption(label="Catacombs", value="catacombs"),
+			discord.SelectOption(label="Catacombs", value="Catacombs"),
 			discord.SelectOption(label="Fishing", value="SKILL_FISHING"),
 			discord.SelectOption(label="Alchemy", value="SKILL_ALCHEMY"),
 			discord.SelectOption(label="Mining", value="SKILL_MINING"),
@@ -29,7 +29,7 @@ class Skillselection(discord.ui.View):
 	)
 	async def select_skill(self, interaction: discord.Interaction, select_item: discord.ui.Select):
 		UUID = minecraft_uuid(playername=self.playername)
-		skill_name = select_item.values[0]
+		self.skill_name = select_item.values[0]
 
 		async with aiohttp.ClientSession() as session:
 			async with session.get(f'https://api.hypixel.net/v2/skyblock/profiles?key={HYPIXEL_API_SECRET}&uuid={UUID}') as resp:
@@ -40,11 +40,12 @@ class Skillselection(discord.ui.View):
 				profile_data = profiles
 				break
 
-		if skill_name == "catacombs":
+		if self.skill_name == "Catacombs":
 			self.skill_data = profile_data['members'][UUID]['dungeons']['dungeon_types']['catacombs']['experience']
 		else:
-			self.skill_data = profile_data['members'][UUID]['player_data']['experience'][skill_name]
+			self.skill_data = profile_data['members'][UUID]['player_data']['experience'][self.skill_name]
 
 		self.interaction_complete = True
 		await interaction.response.defer()
+		return self.skill_data, self.skill_name
 
