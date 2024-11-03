@@ -12,9 +12,7 @@ class Accountslinks(commands.Cog):
         database = connect('accounts.sqlite')
         database.isolation_level = None  # Enables autocommit mode
         cursor = database.cursor()
-        is_linked = None
-        linked_discord = None
-        allowedtolink = None
+ 
         # Create the table if it doesn't exist
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS accountlinks (
@@ -26,6 +24,10 @@ class Accountslinks(commands.Cog):
         )
         """)
 
+        is_linked = None
+        linked_discord = None
+        allowedtolink = None
+
         embed = discord.Embed(
             color= discord.Color.dark_teal(),
             )
@@ -35,10 +37,10 @@ class Accountslinks(commands.Cog):
         interactionUserName = ctx.message.author.name
         interactionUserID = ctx.message.author.id
 
-        result = cursor.execute(f"SELECT discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked FROM accountlinks WHERE discord_name = '{interactionUserName}'").fetchone()
+        result = cursor.execute(f"SELECT is_linked FROM accountlinks WHERE discord_name = '{interactionUserName}'").fetchone()
 
         if result:
-            discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked = result
+            is_linked = result[0]
 
         
             try:
