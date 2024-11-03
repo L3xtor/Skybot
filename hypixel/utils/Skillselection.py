@@ -1,9 +1,7 @@
-import discord
-import requests
+import discord	
 
 from utils.settings import HYPIXEL_API_SECRET
 from hypixel.utils.functions import minecraft_uuid
-from datetime import datetime
 import aiohttp
 
 

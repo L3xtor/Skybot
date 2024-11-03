@@ -12,7 +12,7 @@ from discord.ext import commands
 import utils.settings as settings
 
 
-#HypixelAPI Key
+#Hypixel API Key
 API_KEY = settings.HYPIXEL_API_SECRET
 
 # Logger

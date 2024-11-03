@@ -71,13 +71,13 @@ def connect_linkdb():
 
         # Create the table if it doesn't exist
         cursor.execute("""
-        CREATE TABLE IF NOT EXISTS accountlinks (
-        discord_uuid VARCHAR(255) PRIMARY KEY,
-        minecraft_uuid VARCHAR(255),
-        discord_name VARCHAR(255),
-        minecraft_name VARCHAR(255),
-        is_linked BOOLEAN
-        )
+                        CREATE TABLE IF NOT EXISTS accountlinks (
+                        discord_uuid VARCHAR(255) PRIMARY KEY,
+                        minecraft_uuid VARCHAR(255),
+                        discord_name VARCHAR(255),
+                        minecraft_name VARCHAR(255),
+                        is_linked BOOLEAN
+                        )     
         """)
         return cursor
 

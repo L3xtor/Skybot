@@ -7,7 +7,7 @@ from hypixel.utils.functions import *
 class Accountslinks(commands.Cog):
 	
     @commands.hybrid_command()
-    async def link(self, ctx, playername: str):
+    async def link(self, ctx: commands.Context, playername: str):
         
         database = connect('accounts.sqlite')
         database.isolation_level = None  # Enables autocommit mode
@@ -15,13 +15,13 @@ class Accountslinks(commands.Cog):
  
         # Create the table if it doesn't exist
         cursor.execute("""
-        CREATE TABLE IF NOT EXISTS accountlinks (
-        discord_uuid VARCHAR(255) PRIMARY KEY,
-        minecraft_uuid VARCHAR(255),
-        discord_name VARCHAR(255),
-        minecraft_name VARCHAR(255),
-        is_linked BOOLEAN
-        )
+                CREATE TABLE IF NOT EXISTS accountlinks (
+                discord_uuid VARCHAR(255) PRIMARY KEY,
+                minecraft_uuid VARCHAR(255),
+                discord_name VARCHAR(255),
+                minecraft_name VARCHAR(255),
+                is_linked BOOLEAN
+                )
         """)
 
         is_linked = None
@@ -90,13 +90,15 @@ class Accountslinks(commands.Cog):
 
         cursor = connect_linkdb()
 
-        result = cursor.execute(f"SELECT discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked FROM accountlinks WHERE minecraft_name = '{playername}'").fetchone()
+        result = cursor.execute(f"""
+                                SELECT discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked FROM accountlinks 
+                                WHERE minecraft_name = '{playername}'""").fetchone()
 
         if result:
             discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked = result
             discord_lnk = f"<@{discord_uuid}>"
 
-            if is_linked == 1: 
+            if is_linked: 
                 is_linked = '<a:checkmark:1302394407231815740>'
                 
             fields = (
