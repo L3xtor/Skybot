@@ -36,7 +36,7 @@ lib.getPlayerSkillInfo.restype = SkillInfo
 lib.getPlayerSkillInfo.argtypes = [c_double, c_char_p]
 
 def getPlayerSkillLevel(skill_xp, skill_name: str):
-	buffer = create_string_buffer(skill_name.encode('utf-08'), 15)
+	buffer = create_string_buffer(skill_name.encode('utf-8'), 15)
 	playerInfo = lib.getPlayerSkillInfo(skill_xp, buffer)
 
 	skillLevel : int = playerInfo.skill_level
