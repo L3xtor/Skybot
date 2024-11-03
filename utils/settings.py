@@ -18,6 +18,7 @@ HYPIXEL_COGS_DIR = listdir('hypixel')
 CATACOMBS_COGS_DIR = listdir('hypixel/catacombs')
 FISHING_COGS_DIR = listdir('hypixel/fishing')
 GENERAL_COGS_DIR = listdir('hypixel/general')
+PARTY_COGS_DIR = listdir('hypixel/partyfinder')
 
 # Adds ever cog into the list without '.py' and also ignores the file if its a '__init__.py' file
 NORMAL_COGS = [f'cogs.{cogs[:-3]}' for cogs in NORMAL_COGS_DIR if cogs != '__init__.py' and cogs.endswith('.py') ]
@@ -25,7 +26,9 @@ HYPIXEL_COGS = [f'hypixel.{cogs[:-3]}' for cogs in HYPIXEL_COGS_DIR if cogs != '
 CATACOMBS_COGS = [f'hypixel.catacombs.{cogs[:-3]}' for cogs in CATACOMBS_COGS_DIR if cogs != '__init__.py' and cogs.endswith('.py') ]
 FISHING_COGS = [f'hypixel.fishing.{cogs[:-3]}' for cogs in FISHING_COGS_DIR if cogs != '__init__.py' and cogs.endswith('.py') ]
 GENERAL_COGS = [f'hypixel.general.{cogs[:-3]}' for cogs in GENERAL_COGS_DIR if cogs != '__init__.py' and cogs.endswith('.py') ]
+PARTY_COGS = [f'hypixel.partyfinder.{cogs[:-3]}' for cogs in PARTY_COGS_DIR if cogs != '__init__.py' and cogs.endswith('.py') ]
 
-COGS = NORMAL_COGS + HYPIXEL_COGS + CATACOMBS_COGS + FISHING_COGS + GENERAL_COGS
+
+COGS = NORMAL_COGS + HYPIXEL_COGS + CATACOMBS_COGS + FISHING_COGS + GENERAL_COGS + PARTY_COGS
 
 dictConfig(logging_config)
