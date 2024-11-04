@@ -5,6 +5,19 @@ from hypixel.utils.functions import minecraft_uuid
 import aiohttp
 
 
+skill_emotes = {
+    "Catacombs": "🪦",        
+    "SKILL_FISHING": "🎣",    
+    "SKILL_ALCHEMY": "⚗️",    
+    "SKILL_MINING": "⛏️",     
+    "SKILL_FARMING": "🌾",     
+    "SKILL_ENCHANTING": "✨",  
+    "SKILL_TAMING": "🐾",      
+    "SKILL_FORAGING": "🪚",     
+    "SKILL_CARPENTRY": "🔨",   
+    "SKILL_COMBAT": "⚔️",     
+}
+
 class Skillselection(discord.ui.View):
 	def __init__(self, *, timeout: float | None = 180, playername: str):
 		super().__init__(timeout=timeout)
@@ -45,7 +58,10 @@ class Skillselection(discord.ui.View):
 		else:
 			self.skill_data = profile_data['members'][UUID]['player_data']['experience'][self.skill_name]
 
+		self.skill_emoji = skill_emotes.get(self.skill_name)
+		print(self.skill_emoji)
+
 		self.interaction_complete = True
 		await interaction.response.defer()
-		return self.skill_data, self.skill_name
+		return self.skill_data, self.skill_name, self.skill_emoji
 
