@@ -100,5 +100,20 @@ def whodis(dcname):
         return player(discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked)
     
 
+skill_emotes = {
+    "Catacombs": "🪦",        # Example emoji for Catacombs
+    "SKILL_FISHING": "🎣",    # Emoji for Fishing
+    "SKILL_ALCHEMY": "⚗️",    # Emoji for Alchemy
+    "SKILL_MINING": "⛏️",     # Emoji for Mining
+    "SKILL_FARMING": "🌾",     # Emoji for Farming
+    "SKILL_ENCHANTING": "✨",  # Emoji for Enchanting
+    "SKILL_TAMING": "🐾",      # Emoji for Taming
+    "SKILL_FORGING": "🔨",     # Emoji for Foraging
+    "SKILL_CARPENTRY": "🪚",   # Emoji for Carpentry
+    "SKILL_COMBAT": "⚔️",      # Emoji for Combat
+}
 
+def get_skill_emote(skill_name):
+    return skill_emotes.get(skill_name, "❓")
         
+get_skill_emote('SKILL_FISHING')
