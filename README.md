@@ -35,5 +35,5 @@ For implemented Features check our [Features](https://github.com/L3xtor/Skybot/b
 
 # To compile the cpp file
 ```
-g++ -shared -fPIC -o hypixel/catacombs/skills.so hypixel/catacombs/cata_Info.cpp
+g++ -shared -fPIC -o hypixel/catacombs/skills.so hypixel/catacombs/skill_info.cpp
 ```
