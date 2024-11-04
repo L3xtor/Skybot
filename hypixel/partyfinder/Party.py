@@ -16,7 +16,7 @@ class pfView(discord.ui.View):
     )
     async def select_class(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.chosenclass = select.values[0]  # Get the selected class
-    
+
         role_names = ["Archer", "Berserk", "Mage", "Tank", "Healer"]
         class_roles = {}
 
@@ -51,14 +51,28 @@ class pfView(discord.ui.View):
 
         # Create the new channel
         new_channel = await interaction.guild.create_text_channel(f"lfp-{lfp_number}")
-    
-        # Send the message in the new channel
-        await new_channel.send(searching_message)
+
+        # Create the button for selecting classes
+        button = discord.ui.Button(label="Select Missing Class", style=discord.ButtonStyle.primary)
+        async def button_callback(button_interaction: discord.Interaction):
+            if button_interaction.user == interaction.user:
+                await button_interaction.response.send_message("This is your own party!", ephemeral=True)
+                return
+            
+            missing_roles = [role for role in role_names if discord.utils.get(interaction.guild.roles, name=role) not in interaction.user.roles]
+            if missing_roles:
+                embed = discord.Embed(title="Select Your Class", description="You can choose from the following missing classes:", color=discord.Color.blue())
+                for role in missing_roles:
+                    embed.add_field(name=role, value="React to select this class!", inline=False)
+                await button_interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                await button_interaction.response.send_message("You already have all the roles!", ephemeral=True)
+
+        button.callback = button_callback
+
+        # Send the message in the new channel with the button
+        await new_channel.send(searching_message, view=discord.ui.View().add_item(button))
         await interaction.response.send_message(f"A new channel has been created: <#{new_channel.id}>", ephemeral=True)
-
-
-        
-
 
 
 class Party(commands.Cog):
@@ -66,8 +80,7 @@ class Party(commands.Cog):
     @commands.hybrid_command()
     async def pcreate(self, ctx):
         view = pfView()  
-        await ctx.send("Please select your class:", view=view, ephemeral=True)  
-
+        await ctx.send("Please select your class:", view=view, ephemeral=True)
 
 
 async def setup(bot: commands.Bot):
