@@ -14,6 +14,8 @@
     - [ ] Add declining and accepting to the partyhost and the option to toggle it for Joined mates
     - [ ] Add Creating Partys with multiple Spots already taken
     - [ ] Add a Rolefilter (no dupe, 2 bers, dont matter)
+     
+- [ ] Add a carryfinder
 
 ## Done 
 
