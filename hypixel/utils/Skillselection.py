@@ -59,7 +59,6 @@ class Skillselection(discord.ui.View):
 			self.skill_data = profile_data['members'][UUID]['player_data']['experience'][self.skill_name]
 
 		self.skill_emoji = skill_emotes.get(self.skill_name)
-		print(self.skill_emoji)
 
 		self.interaction_complete = True
 		await interaction.response.defer()
