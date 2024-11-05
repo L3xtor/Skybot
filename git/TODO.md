@@ -3,20 +3,25 @@
 
 
 - [ ] Improve the /cata cmd with more Info
-    - [ ] Add SA __>[WIP by CodingWithFiery]__
     - [ ] Add Class LVLs / avg
     - [ ] Add Armor (Enchant Lvls, Ms Lvls)
 
 - [ ] Add a partyfinder __>[WIP by Lextor]__
-    - [ ] Add a "Create Party" button / add functionality of missing classes
-    - [ ] Add a "x is looking for xy" embed that pings roles
-    - [ ] Add the functionality of applying for partys -> sending a /cata when trying 
-
-
+    - [x] Add a "Create Party" button / add functionality of missing classes
+    - [x] Add a "x is looking for xy" embed that pings roles
+    - [ ] Add the functionality of applying for partys -> sending a /cata when trying
+    - [ ] Add different req options (NW, Items, runcount, pb)
+    - [ ] Add declining and accepting to the partyhost and the option to toggle it for Joined mates
+    - [ ] Add Creating Partys with multiple Spots already taken
+    - [ ] Add a Rolefilter (no dupe, 2 bers, dont matter)
 
 ## Done 
 
+
 - [x] Make fishing look better by adding emotes
-      
 - [x] Implement verification System
     - [x] Save mc UUID and discord UUID in DB
+
+
+  
+- [x] Add SA __>[by CodingWithFiery]__
