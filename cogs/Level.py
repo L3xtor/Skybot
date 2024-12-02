@@ -1,4 +1,4 @@
-import discord
+'''import discord
 from discord.ext import commands
 
 from os import remove
@@ -241,4 +241,4 @@ class Leveling_Debugger(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(Leveling(bot))
-    await bot.add_cog(Leveling_Debugger(bot))
+    await bot.add_cog(Leveling_Debugger(bot))'''
