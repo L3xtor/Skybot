@@ -16,7 +16,7 @@ class Catacombs(commands.Cog):
 	@staticmethod
 	def profileInfo(playername: str, PID):
 		SkycryptProfileAPI = requests.get(f'https://sky.shiiyu.moe/api/v2/profile/{playername}').json()
-		networth = numerize(SkycryptProfileAPI['profiles'][PID]['data']['networth']['networth'])
+		networth = numerize.numerize(SkycryptProfileAPI['profiles'][PID]['data']['networth']['networth'])
 
 		has_hype = ':x:'
 		has_term = ':x:'
