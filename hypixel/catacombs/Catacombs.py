@@ -59,6 +59,7 @@ class Catacombs(commands.Cog):
 
 	@commands.hybrid_command()
 	async def times(self, ctx, playername: str):
+		"""Shows the Floor Runtimes for the selected dungeon Floor"""
 		view = floorselection(playername=playername)
 		await ctx.send(view=view)
 		await view.wait()

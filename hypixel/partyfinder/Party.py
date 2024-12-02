@@ -95,6 +95,7 @@ class Party(commands.Cog):
 
     @commands.hybrid_command()
     async def pcreate(self, ctx):
+        """Creates a party in the custom discord PF"""
         view = pfView()  
         await ctx.send("Please select your class:", view=view, ephemeral=True)
 

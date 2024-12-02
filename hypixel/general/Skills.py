@@ -9,6 +9,7 @@ from numerize.numerize import numerize
 class Skills(commands.Cog):
 	@commands.hybrid_command()
 	async def skills(self, ctx, playername: str):
+		"""Shows Skill Level, current xp and xp to next lvl"""
 		async def getskillxp(playername):
 			view = Skillselection(playername=playername)
 			await ctx.send(view=view)

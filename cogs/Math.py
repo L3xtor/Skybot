@@ -12,18 +12,21 @@ class Math(commands.Cog):
 
     @math.command(name='let')
     async def let(self, ctx, variable, value):
+        """Adds the given Value to the Variable Dict (Position = Variable)"""
         variable_dict[variable] = value
         await ctx.send('Ok, adding value to database')
 
 
     @math.command(name='clear')
     async def clear(self, ctx):
+        """Manually clears Variable Dict"""
         variable_dict.clear()
         await ctx.send('Cleared variable dict')
 
 
     @math.command(name='calculate')
     async def _calculate(self, ctx, user_message):
+        """Calculates the given Math Question"""
         expression = ''
 
         for i in user_message:

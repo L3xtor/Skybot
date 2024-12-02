@@ -8,7 +8,7 @@ class Accountslinks(commands.Cog):
 	
     @commands.hybrid_command()
     async def link(self, ctx: commands.Context, playername: str):
-        
+        """Links your Discord-Account to the specified Minecraft-Account if its set in the Hypixel Social menu"""
         database = connect('accounts.sqlite')
         database.isolation_level = None  # Enables autocommit mode
         cursor = database.cursor()
@@ -83,7 +83,7 @@ class Accountslinks(commands.Cog):
 
     @commands.hybrid_command()
     async def whois(self, ctx, playername: str, ):
-
+        """Displays info about a linked player"""
         embed = discord.Embed(
             color= discord.Color.dark_teal(),
             )

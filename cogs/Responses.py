@@ -9,11 +9,13 @@ from discord.ext import commands
 class Responses(commands.Cog):
     @commands.hybrid_command(name="about")
     async def about(self, ctx):
+        """Prints a little about me Info-text"""
         embed = discord.Embed(
             color=discord.Colour.red(),
             title="About me",
-            description="Hi! I'm a bot that was created by TheFieryWarrior and Lextor, purely in python!. I am just their coding project and I hope that I can help"
+            description="Hi! I'm a bot that was created by TheFieryWarrior and Lextor,!. I am just their coding project and I hope that I can help"
                         " with my geeky things my creators coded for you"
+                        " Check out our Sourcecode on github.com/l3xtor/skybot <3"
         )
         embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/731143503530164374/7ac170c9e25e3cf308d3af80ab961234.webp?size=80')
         await ctx.send(embed=embed)
@@ -53,10 +55,11 @@ class Responses(commands.Cog):
 
     @commands.hybrid_command(name='say')
     async def say(self, ctx, user_message):
+        """Sends the specified User Message"""
         if not user_message:
             await ctx.send('WHAT DO YOU WANT FROM ME')
         else:
-            await ctx.send(type(user_message))
+            await ctx.send(user_message)
 
 
     @commands.hybrid_command(name='hello',
