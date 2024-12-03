@@ -19,6 +19,10 @@ sudo .venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerize P
 ```
 git clone https://github.com/Altpapier/Skyblock-Item-Emojis.git
 ```
+# Compile the CPP File
+```
+g++ -shared -fPIC -o hypixel/catacombs/skills.so hypixel/catacombs/skill_info.cpp
+```
 
 ## Create all needed environment variables
 Create a file named .env in the root directory of your project and add the following keys to it
@@ -32,8 +36,3 @@ For upcoming Features check our [Todo's](https://github.com/L3xtor/Skybot/blob/m
 
 # Features 
 For implemented Features check our [Features](https://github.com/L3xtor/Skybot/blob/main/git/FEATURES.md)
-
-# To compile the cpp file
-```
-g++ -shared -fPIC -o hypixel/catacombs/skills.so hypixel/catacombs/skill_info.cpp
-```
