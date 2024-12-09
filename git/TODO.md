@@ -1,5 +1,6 @@
 # Planned / WIP 
 
+- [ ] Add a shoot command simmilar to /slap [Requested by KoenigBoohoo]
 - [ ] Add a Fee command that shows loss of fees / tax for a specified price
 
 - [ ] Improve the /cata cmd with more Info
