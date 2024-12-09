@@ -1,6 +1,9 @@
 # Planned / WIP 
 
 - [ ] Add a shoot command simmilar to /slap [Requested by KoenigBoohoo]
+    - [ ] Add the functionality of setting command-use reqs
+    - [ ] shoot critical: timeout members for 3 min, Mute members for 5 min, 30% chance to crit
+
 - [ ] Add a Fee command that shows loss of fees / tax for a specified price
 
 - [ ] Improve the /cata cmd with more Info
