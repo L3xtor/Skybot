@@ -1,41 +1,38 @@
+from os import link
 import discord
 from discord.ext import commands
 from sqlite3 import connect
 from hypixel.utils.functions import minecraft_uuid as get_uuid
 from hypixel.utils.functions import *
 
+database = connect('accounts.sqlite')
+database.autocommit = True  # Enables autocommit mode
+cursor = database.cursor()
+
+# Create the table if it doesn't exist
+cursor.execute("""
+        CREATE TABLE IF NOT EXISTS accountlinks (
+            discord_uuid VARCHAR(255) PRIMARY KEY,
+            minecraft_uuid VARCHAR(255),
+            discord_name VARCHAR(255),
+            minecraft_name VARCHAR(255),
+            is_linked BOOLEAN
+        )
+        """)
+
 class Accountslinks(commands.Cog):
 	
     @commands.hybrid_command()
     async def link(self, ctx: commands.Context, playername: str):
-        """Links your Discord-Account to the specified Minecraft-Account if its set in the Hypixel Social menu"""
-        database = connect('accounts.sqlite')
-        database.isolation_level = None  # Enables autocommit mode
-        cursor = database.cursor()
- 
-        # Create the table if it doesn't exist
-        cursor.execute("""
-                CREATE TABLE IF NOT EXISTS accountlinks (
-                discord_uuid VARCHAR(255) PRIMARY KEY,
-                minecraft_uuid VARCHAR(255),
-                discord_name VARCHAR(255),
-                minecraft_name VARCHAR(255),
-                is_linked BOOLEAN
-                )
-        """)
-
-        is_linked = None
-        linked_discord = None
-        allowedtolink = None
+    
+        is_linked, linked_discord = None, None
 
         embed = discord.Embed(
             color= discord.Color.dark_teal(),
             )
 
-
-        interactionUser = ctx.message.author.mention
-        interactionUserName = ctx.message.author.name
-        interactionUserID = ctx.message.author.id
+        message_author = ctx.message.author
+        interactionUser, interactionUserName, interactionUserID = message_author.mention, message_author.name, message_author.id
 
         result = cursor.execute(f"SELECT is_linked FROM accountlinks WHERE discord_name = '{interactionUserName}'").fetchone()
 
@@ -54,27 +51,21 @@ class Accountslinks(commands.Cog):
                 elif str(e) == "'socialMedia'":
                     embed.add_field(name="No Discord Account found!", value=f"User {playername} currently isn't linked with any Discord account")
 
-            if linked_discord is not None:
-                if linked_discord == interactionUserName:
-                    allowedtolink = True
-
-                else:
-                    embed.add_field(name= "Wrong Account linked!",value=f"User '{playername}' has the discord name '{linked_discord}' linked")
-
-
-
-            if allowedtolink == True:
-                discordUUID = interactionUserID
-                minecraftUUID = get_uuid(playername)
-                discordName = interactionUserName
-                minecraftName = playername
-                is_linked = True
+            if linked_discord is not None and linked_discord == interactionUserName:
+                (discordUUID, minecraftUUID, discordName, minecraftName, is_linked) = (interactionUserID, get_uuid(playername), interactionUserName, playername, True)
 
                 cursor.execute("""
-                INSERT INTO accountlinks (discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked)
-                VALUES (?, ?, ?, ?, ?)
-                """, (discordUUID, minecraftUUID, discordName, minecraftName, is_linked))
-                embed.add_field(name= "Thank you!",value=f"Thanks for veryfing *{interactionUser}*")
+                                INSERT INTO accountlinks (discord_uuid, minecraft_uuid, discord_name, minecraft_name, is_linked)
+                                VALUES (?, ?, ?, ?, ?)
+                                """, (discordUUID, minecraftUUID, discordName, minecraftName, is_linked))
+                
+                file = discord.File(fp='images/rick_roll.gif', filename='rick_roll.gif')
+                embed.set_thumbnail(url='attachment://rick_roll.gif')
+                embed.add_field(name= "Thank you!",value=f"Thanks for veryfing *{interactionUser}*", file = file)
+
+            else:
+                embed.add_field(name= "Wrong Account linked!",value=f"User '{playername}' has the discord name '{linked_discord}' linked")
+
 
         await ctx.send(embed=embed)
 

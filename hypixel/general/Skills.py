@@ -20,20 +20,14 @@ class Skills(commands.Cog):
 
 		skilldata, skillname, skillemote = await getskillxp(playername=playername)  
 		
-		if skillname == "Catacombs":
-			skilltype = skillname
-			SkillnameFormated = skillname.capitalize()
-		else:
-			skilltype = "Skills"
-			SkillnameFormated = skillname.replace("SKILL_", "").capitalize()
-
+		SkillnameFormated = skillname.capitalize() if skillname == 'Catacombs' else skillname.replace("SKILL_", "").capitalize()
 
 		embed = discord.Embed(
 		  color = discord.Color.dark_teal(),
 		  title = f"Skill-Breakdown for {playername.title()}",
 		)
 
-		skillLevel, current_xp, xp_to_reach_next_level = getPlayerSkillLevel(skilldata, skilltype)
+		skillLevel, current_xp, xp_to_reach_next_level = getPlayerSkillLevel(skilldata, skillname)
 
 		embed.add_field(name='**Selected Skill**', value= f'[{skillemote}] {SkillnameFormated}', inline=False) 
 		embed.add_field(name='**Skill Level**', value= skillLevel, inline=False)

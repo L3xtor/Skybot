@@ -11,17 +11,13 @@ source .venv/bin/activate
 
 ## Import all the needed modules
 ```
-sudo .venv/bin/pip install 'discord.py[voice]' python-dotenv requests numerize Pillow colorlog
+sudo pip install -r requirements.txt
 
 ```
 
 ## Clone Altpapier's Github (only need to do this if you want to use specific emote Functions)
 ```
 git clone https://github.com/Altpapier/Skyblock-Item-Emojis.git
-```
-# Compile the CPP File
-```
-g++ -shared -fPIC -o hypixel/catacombs/skills.so hypixel/catacombs/skill_info.cpp
 ```
 
 ## Create all needed environment variables

@@ -75,7 +75,7 @@ class Emotes(commands.Cog):
           
 
 	@commands.hybrid_command(name='create_emoji')
-	async def _create(self, ctx, itemname: str):
+	async def _create(self, ctx: commands.Context, itemname: str):
 		EmoteFunctions().getjpg(itemname)
 
 		EmoteFunctions().postdiscordemote(itemname)
