@@ -4,7 +4,8 @@
     - [ ] Add the functionality of setting command-use reqs
     - [ ] shoot critical: timeout members for 3 min, Mute members for 5 min, 30% chance to crit
 
-- [ ] Add a Fee command that shows loss of fees / tax for a specified price
+- [ ] Add a command that can calculate item craft cost with upgrades [Suggested by AltanOA]
+    - [ ] Add a Fee command that shows loss of fees / tax for a specified price
 
 - [ ] Improve the /cata cmd with more Info
     - [ ] Add Class LVLs / avg
