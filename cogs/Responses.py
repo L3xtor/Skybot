@@ -9,7 +9,7 @@ from discord.ext import commands
 class Responses(commands.Cog):
     @commands.hybrid_command(name="about")
     async def about(self, ctx):
-        """Prints a little about me Info-text"""
+        """Prints an about me Info-text"""
         embed = discord.Embed(
             color=discord.Colour.red(),
             title="About me",
@@ -23,7 +23,7 @@ class Responses(commands.Cog):
 
     @commands.hybrid_command(name='8ball')
     async def _8ball_command(self, ctx):
-        """Returns random 8ball question"""
+        """Returns random 8ball answer"""
         ball_responses = ['The same response as every boy/girl gave you when you asked them out, no.',
                             'You wanna hear no in German? NEIN.',
                             'As one wise man said, just go with the flow.',
