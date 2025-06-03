@@ -1,5 +1,5 @@
 import requests
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from numerize import numerize
 from sqlite3 import connect
 
@@ -12,9 +12,14 @@ class HypixelAPIError(Exception):
 
 # Returns dungeon info of player
 def dungeonsInfo(
-    playername: str, selected_profile: str | None
+    playername: str, selected_profile: Optional[str] = None
 ) -> Tuple[int, int, float, Dict[Any, Any]]:
-    _, selected_profile = returnProfileID(playername=playername)
+    result = returnProfileID(selectedprofile=selected_profile, playername=playername)
+    if result is None:
+        raise ValueError("No profile ID found for that player/profile.")
+
+    _, selected_profile = result
+
     SkycryptDungeonsAPI = requests.get(
         f"https://sky.shiiyu.moe/api/v2/dungeons/{playername}/{selected_profile}"
     ).json()
@@ -38,6 +43,7 @@ def dungeonsInfo(
 # Returns profile ID based on cute name of player
 def returnProfileID(playername: str, selectedprofile: Optional[str] = None):
     hypixelProfiles = miscellaneous_data(playername=playername)
+    assert hypixelProfiles is not None
 
     # Searching Each Profile
     if selectedprofile:
@@ -54,16 +60,21 @@ def returnProfileID(playername: str, selectedprofile: Optional[str] = None):
 
 
 # Returns Miscellaneous data like Hypixel profiles data
-def miscellaneous_data(playername):
+def miscellaneous_data(playername) -> Optional[List[dict]]:
     UUID = minecraft_uuid(playername=playername)
-    hypixelProfileData = requests.get(
+    hypixelProfileData: dict = requests.get(
         f"https://api.hypixel.net/v2/skyblock/profiles?key={API_KEY}&uuid={UUID}"
     ).json()
 
-    if hypixelProfileData["success"]:
-        return hypixelProfileData["profiles"]
-    else:
+    if not hypixelProfileData["success"]:
         raise HypixelAPIError(hypixelProfileData["cause"])
+
+    profile = hypixelProfileData.get("profiles")
+
+    if profile is None:
+        return None
+
+    return profile
 
 
 def player_data(playername):
@@ -145,4 +156,3 @@ def get_skill_emote(skill_name):
 
 
 get_skill_emote("SKILL_FISHING")
-

@@ -5,37 +5,53 @@ from discord.ext import commands
 from hypixel.utils.functions import returnProfileID
 from hypixel.utils.Emoji import EmoteFunctions
 
-from typing import Tuple
+from typing import Optional, Tuple, List
 
 
 class Fishing(commands.Cog):
     def get_fish_and_trophy_stage(
-        self, playername: str, selected_profile: str = None
-    ) -> Tuple[dict, str]:
-        # Searching Each Profile
-        PID, _ = returnProfileID(
+        self, playername: str, selected_profile: Optional[str]
+    ) -> Tuple[List[Tuple[str, str]], str]:
+        """Fetches the player's trophy fish data and current trophy stage."""
+
+        result = returnProfileID(
             selectedprofile=selected_profile, playername=playername
         )
-        SkycryptProfileAPI: dict = requests.get(
-            f"https://sky.shiiyu.moe/api/v2/profile/{playername}"
-        ).json()
-        fish_data: dict = SkycryptProfileAPI["profiles"][PID]["data"]["crimson_isle"][
-            "trophy_fish"
+        if result is None:
+            raise ValueError("No profile ID found for that player/profile.")
+        profile_id, profile_name = result
+
+        # Fetch SkyCrypt profile data
+        try:
+            response = requests.get(
+                f"https://sky.shiiyu.moe/api/v2/profile/{playername}/{profile_name}"
+            )
+            response.raise_for_status()
+            profile_data = response.json()
+        except Exception as e:
+            raise RuntimeError(f"Failed to fetch SkyCrypt data: {e}")
+
+        # Extract trophy fish data safely
+        try:
+            trophy_info = profile_data["profiles"][profile_id]["data"]["crimson_isle"][
+                "trophy_fish"
+            ]
+        except KeyError:
+            raise ValueError("Trophy fish data not found for this profile.")
+
+        caught_fish = trophy_info.get("fish", [])
+        trophy_stage = trophy_info.get("stage") or "No Stage reached"
+
+        # Build a list of (fish name, highest tier) pairs
+        fish_tiers = [
+            (fish["display_name"], fish.get("highest_tier", "bronze"))
+            for fish in caught_fish
         ]
-        catchedlist: dict = fish_data.get("fish")
 
-        trophyStage = fish_data.get("stage") if not None else "No Stage reached"
-
-        # Creates a dictionary with all the fish name where " " gets replaced by '_' in fish names
-        # and the highest tier of the fish is the value
-        fish_tier = {
-            fish["display_name"]: fish.get("highest_tier") for fish in catchedlist
-        }
-
-        return fish_tier.items(), trophyStage
+        return fish_tiers, trophy_stage
 
     @commands.hybrid_command(name="trophy_stats")
-    async def trophy(self, ctx, playername: str, selectedprofile: str = None):
+    async def trophy(self, ctx, playername: str, selectedprofile: Optional[str]):
         """Sends a Trophyfish-Breakdown for a given Player"""
 
         fish_tiers, trophyStage = self.get_fish_and_trophy_stage(
@@ -83,4 +99,3 @@ class Fishing(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Fishing(bot))
-
