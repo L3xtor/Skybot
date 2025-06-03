@@ -21,7 +21,9 @@
     - [ ] Add a Rolefilter (no dupe, 2 bers, dont matter)
      
 - [ ] Add a carryfinder
-
+- [ ] Add a /networth
+- [ ] Copy functionality of every skyblock bot in Intrest's Server and add it to it
+- [ ] Ping @everyone when bald man finalliy uploads
 ## Done 
 
 
