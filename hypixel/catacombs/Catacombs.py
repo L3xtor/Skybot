@@ -5,7 +5,6 @@ import requests
 import logging
 from numerize.numerize import numerize
 
-from hypixel.utils import Floorselection
 from hypixel.utils.Floorselection import FloorSelection
 from hypixel.utils.functions import *
 
